@@ -23,5 +23,13 @@ export default defineConfig({
     css: {
         // 开启sourcemap
         devSourcemap: true,
+    },
+    json: {
+        // 以编译的形式导入Json文件，提升性能
+        stringify: true,
+    },
+    build: {
+        // 小于10Kb的资源将转换为base64编码，减少http请求
+        assetsInlineLimit: 10240,
     }
 })
