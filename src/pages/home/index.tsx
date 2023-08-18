@@ -2,6 +2,7 @@
 import styles from './index.module.scss'
 import backstageImg from '~/assets/images/window-backstage.jpg'
 import { useNavigate } from 'react-router-dom'
+import { LogoVerticalSvg } from '~/components/LogoSvg'
 
 const windowIcons = [
     { id: 'backstage', name: '管理后台', url: backstageImg, path: '/backstage/home' },
@@ -29,6 +30,9 @@ const Home = () => {
                     })
                 }
             </ul>
+        </div>
+        <div style={{ position: 'relative', width: 200 }}>
+            <LogoVerticalSvg />
         </div>
     </div>
 }
