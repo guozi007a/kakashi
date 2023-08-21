@@ -12,6 +12,11 @@ const About = () => {
         aboutMsg()
     }, [])
 
+    useEffect(() => { 
+        console.log(process.env.NODE_ENV)
+        console.log(import.meta.env.ENV_BASE)
+    }, [])
+
     return <div>我</div>
 }
 
