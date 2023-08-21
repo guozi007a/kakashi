@@ -1,6 +1,6 @@
 {
-  "name": "kakshi",
-  "private": true,
+  "name": "multi-app-blog",
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://github.com/guozi007a/multi-app-blog",
