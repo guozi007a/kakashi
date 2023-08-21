@@ -1,1 +1,0 @@
-import{r as o,j as s}from"./index-973a61f4.js";import{r as e}from"./request-8d1910c0.js";const u=()=>(o.useEffect(()=>{(async()=>{const t=await e("/about");console.log(t)})()},[]),o.useEffect(()=>{console.log("production"),console.log("/multi-app-blog/")},[]),s.jsx("div",{children:"我"}));export{u as default};
