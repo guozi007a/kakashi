@@ -31,8 +31,8 @@ const Home = () => {
             </ul>
         </div>
         <div style={{position: 'relative'}}>
-            <h3 onClick={()=>{navigate('/about')}}>关于我</h3>
-            <h3 onClick={()=>{navigate('/list')}}>列表页</h3>
+            <h3 onClick={()=>{navigate('/a')}}>关于我</h3>
+            <h3 onClick={()=>{navigate('/b')}}>列表页</h3>
         </div>
     </div>
 }
