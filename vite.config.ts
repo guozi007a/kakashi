@@ -12,6 +12,10 @@ export default defineConfig({
         hmr: {
             // 禁止报错信息覆盖屏幕
             overlay: false,
+        },
+        proxy: {
+            '/about': 'http://127.0.0.1:4001/v1',
+            '/list': 'http://127.0.0.1:4001/v2',
         }
     },
     resolve: {
