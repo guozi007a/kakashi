@@ -3,7 +3,7 @@
   "private": false,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.com/guozi007a/multi-app-blog",
+  "homepage": "https://guozi007a.github.io/multi-app-blog",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
