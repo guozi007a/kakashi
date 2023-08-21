@@ -7,7 +7,7 @@ const envPrefix = 'ENV_'
 export default defineConfig(({ mode }) => {
 
     const env = loadEnv(mode, process.cwd(), envPrefix)
-    console.log(env)
+    // console.log(env)
 
     return {
         plugins: [react()],

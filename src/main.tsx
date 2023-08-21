@@ -4,7 +4,7 @@ import '~/assets/root.css'
 import '~/assets/common.css'
 import App from '~/router'
 
-console.log(import.meta.env.ENV_BASE)
+// console.log(import.meta.env.ENV_BASE)
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter basename={import.meta.env.ENV_BASE}>
