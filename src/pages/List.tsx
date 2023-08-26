@@ -6,7 +6,7 @@ const List = () => {
 
     useEffect(() => { 
         const listMsg = async () => {
-            const res = await request('/list', null, 'post', null)
+            const res = await request('/v2/list', null, 'post', null)
             console.log(res)
         }
         listMsg()
