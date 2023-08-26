@@ -1,0 +1,1 @@
+import{r as t,j as r}from"./index-435a6327.js";import{r as o}from"./request-5f42671f.js";const n=()=>(t.useEffect(()=>{(async()=>{const s=await o("/list",null,"post",null);console.log(s)})()},[]),r.jsx("div",{children:"列表"}));export{n as default};
