@@ -1,0 +1,1 @@
+import{r as s,j as o}from"./index-15395ac9.js";import{r}from"./request-5c523136.js";const c=()=>(s.useEffect(()=>{(async()=>{const t=await r("/v1/about");console.log(t)})()},[]),o.jsx("div",{children:"我"}));export{c as default};
