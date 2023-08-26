@@ -6,7 +6,7 @@ const About = () => {
 
     useEffect(() => { 
         const aboutMsg = async () => {
-            const res = await request('/about')
+            const res = await request('https://multi-app-blog.fun:9000/v1/about')
             console.log(res)
         }
         aboutMsg()

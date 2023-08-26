@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => {
             },
             // 请求代理
             proxy: {
-                '/about': `${env.ENV_PREFIX}/v1`,
+                // '/about': `${env.ENV_PREFIX}/v1`,
                 '/list': `${env.ENV_PREFIX}/v2`,
             }
         },
