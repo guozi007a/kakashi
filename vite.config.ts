@@ -25,8 +25,8 @@ export default defineConfig(({ mode }) => {
             },
             // 请求代理
             proxy: {
-                '/about': 'http://127.0.0.1:4001/v1',
-                '/list': 'http://127.0.0.1:4001/v2',
+                '/about': `${env.ENV_PREFIX}/v1`,
+                '/list': `${env.ENV_PREFIX}/v2`,
             }
         },
         resolve: {
