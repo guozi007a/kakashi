@@ -1,11 +1,13 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 
+// 环境变量前缀，默认是VITE_
 const envPrefix = 'ENV_'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
 
+    // 获取环境变量对象env
     const env = loadEnv(mode, process.cwd(), envPrefix)
     // console.log(env)
 
