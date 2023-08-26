@@ -24,10 +24,10 @@ export default defineConfig(({ mode }) => {
                 overlay: false,
             },
             // 请求代理
-            proxy: {
-                // '/about': `${env.ENV_PREFIX}/v1`,
-                '/list': `${env.ENV_PREFIX}/v2`,
-            }
+            // proxy: {
+            //     '/about': `${env.ENV_PREFIX}/v1`,
+            //     '/list': `${env.ENV_PREFIX}/v2`,
+            // }
         },
         resolve: {
             // 设置别名

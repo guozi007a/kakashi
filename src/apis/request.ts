@@ -29,7 +29,7 @@ export const request = (
 ) => {
 
     const reqConfig = {
-        baseURL: import.meta.env.ENV_ORIGIN,
+        baseURL: import.meta.env.ENV_PREFIX,
         url,
         method,
         params: {},
