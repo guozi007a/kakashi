@@ -37,6 +37,7 @@ export const request = (
         timeout: 10000,
         ...config,
     }
+    // 支持get post put delete请求
     if (method === 'get' || method === 'delete') {
         params && (reqConfig.params = params)
     } else if (method === 'post' || method === 'put') {
