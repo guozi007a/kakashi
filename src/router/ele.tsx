@@ -4,10 +4,6 @@ import { gaurd } from './Gaurd'
 
 const Home = lazy(() => import('~/pages/home'))
 const BackstageHome = lazy(() => import('~/pages/backstage/home'))
-/** mock start */
-const About = lazy(() => import('~/pages/About'))
-const List = lazy(() => import('~/pages/List'))
-/** mock end */
 
 export const ele: RouteObject[] = [
     {
@@ -22,14 +18,6 @@ export const ele: RouteObject[] = [
                 element: gaurd(BackstageHome)
             }
         ]
-    },
-    {
-        path: '/a',
-        element: gaurd(About),
-    },
-    {
-        path: '/b',
-        element: gaurd(List),
     },
     {
         path: '*',
