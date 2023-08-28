@@ -2,6 +2,13 @@
     --primary-dark: #1F2328;
     --primary-light: #fff;
 
+    --gray-1: #dddddd;
+    --gray-2: #cacbca;
+
+    --dark-1: #000;
+
     --blue-1: #27A0FF;
     --blue-2: #3699ea;
+
+    --shadow-1: 0 0 0.6rem 0.2rem rgba(0, 0, 0, .2);
 }
