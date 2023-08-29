@@ -4,6 +4,7 @@ import { gaurd } from './Gaurd'
 
 const Home = lazy(() => import('~/pages/home'))
 const BackstageHome = lazy(() => import('~/pages/backstage/home'))
+const StaticResource = lazy(() => import('~/pages/backstage/staticResource'))
 
 export const ele: RouteObject[] = [
     {
@@ -12,10 +13,11 @@ export const ele: RouteObject[] = [
     },
     {
         path: '/backstage/',
+        element: gaurd(BackstageHome),
         children: [
             {
-                path: 'home',
-                element: gaurd(BackstageHome)
+                path: 'static-resource',
+                element: gaurd(StaticResource)
             }
         ]
     },

@@ -2,6 +2,9 @@
     --primary-dark: #1F2328;
     --primary-light: #fff;
 
+    --text-color-dark: rgba(0, 0, 0, .85);
+    --text-color-light: rgba(255, 255, 255, .85);
+
     --gray-1: #dddddd;
     --gray-2: #cacbca;
     --gray-3: rgba(230, 230, 230, 0.7); /* 苹果电脑银灰色 */

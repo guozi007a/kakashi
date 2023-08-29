@@ -1,48 +1,156 @@
 /** 管理后台首页 */
 import { useState } from "react"
-import { Button, ColorPicker, ConfigProvider, theme } from "antd"
+import {
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+    UploadOutlined,
+    UserOutlined,
+    VideoCameraOutlined,
+} from '@ant-design/icons'
+import { Layout, Menu, Button, theme, Breadcrumb } from 'antd'
+import { Outlet } from "react-router-dom";
+
+const { Header, Sider, Content, Footer } = Layout;
 
 const Home = () => {
-    const [primary, setPrimary] = useState('#1677ff')
-    const [dark, setDark] = useState(false)
 
-    return <div>
-        <h3>backstage home.</h3>
-        <ColorPicker
-            // showText
-            value={primary}
-            onChangeComplete={(color) => setPrimary(color.toHexString())}
-        />
-        <ConfigProvider
-            theme={{
-                token: {
-                    colorPrimary: primary,
-                }
-            }}
-        >
-            <Button type="primary">设置颜色</Button>
-        </ConfigProvider>
-        <br />
-        <ConfigProvider
-            theme={{
-                algorithm: theme.compactAlgorithm,
-            }}
-        >
-            <Button type="primary">hello, be.</Button>
-        </ConfigProvider>
-        <br />
-        <ConfigProvider
-            theme={{
-                token: {
-                    colorPrimary: dark ? '#000' : '#1677ff',
-                    colorText: dark ? '#fff' : '#FF5016',
-                    motion: false,
-                },
-            }}
-        >
-            <Button type="primary" onClick={() => {setDark(!dark)}}>黑白切换</Button>
-        </ConfigProvider>
-    </div>
+    const [collapsed, setCollapsed] = useState(false);
+    const {
+        token: { colorBgContainer },
+    } = theme.useToken();
+
+    return (
+        <>
+            <Layout
+                style={{
+                    minHeight: '100vh',
+                }}
+            >
+                <Sider trigger={null} collapsible collapsed={collapsed}>
+                    <div className="demo-logo-vertical" />
+                    <Menu
+                    theme="dark"
+                    mode="inline"
+                    defaultSelectedKeys={['1']}
+                    items={[
+                        {
+                            key: '1',
+                            icon: <UserOutlined />,
+                            label: 'nav 1',
+                        },
+                        {
+                            key: '2',
+                            icon: <VideoCameraOutlined />,
+                            label: 'nav 2',
+                        },
+                        {
+                            key: '3',
+                            icon: <UploadOutlined />,
+                            label: 'nav 3',
+                        },
+                        {   
+                            key: 'static-resource',
+                            icon: <VideoCameraOutlined />,
+                            label: '静态资源管理',
+                            children: [
+                                {   
+                                    key: 'upload',
+                                    icon: <UploadOutlined />,
+                                    label: '资源上传',
+                                },
+                                {
+                                    key: 'list',
+                                    icon: <UserOutlined />,
+                                    label: '资源列表',
+                                    children: [
+                                        {
+                                            key: 'images',
+                                            icon: <UploadOutlined />,
+                                            label: '图片',
+                                        },
+                                        {
+                                            key: 'video',
+                                            icon: <UploadOutlined />,
+                                            label: '音频',
+                                        },
+                                        {
+                                            key: 'other',
+                                            icon: <UploadOutlined />,
+                                            label: '其他资源'
+                                        },
+                                    ]
+                                },
+                                {
+                                    key: 'temp-keep',
+                                    icon: <UserOutlined />,
+                                    label: '临时资源',
+                                },
+                                {
+                                    key: 'config',
+                                    icon: <UserOutlined />,
+                                    label: '资源配置',
+                                }
+                            ]
+                        },
+                    ]}
+                    />
+                </Sider>
+                <Layout>
+                    <Header style={{ padding: 0, background: colorBgContainer }}>
+                    <Button
+                        type="text"
+                        icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                        onClick={() => setCollapsed(!collapsed)}
+                        style={{
+                            fontSize: '16px',
+                            width: 64,
+                            height: 64,
+                        }}
+                    />
+                    </Header>
+                    <Breadcrumb
+                        style={{
+                            margin: '16px 16px 0 16px',
+                        }}
+                        items={[
+                            {
+                                title: '当前位置：'
+                            },
+                            {
+                                title: 'Home',
+                            },
+                            {
+                                title: <a href="">List</a>,
+                            },
+                            {
+                                title: <a href="">App</a>,
+                            },
+                            {
+                                title: 'Usage',
+                            },
+                        ]}
+                    />
+                    <Content
+                        style={{
+                            margin: '24px 16px',
+                            padding: 24,
+                            minHeight: 280,
+                            background: colorBgContainer,
+                        }}
+                    >
+                        <Outlet />
+                    </Content>
+                    <Footer
+                        style={{
+                            textAlign: 'center',
+                        }}
+                    >
+                        <span>Backstage ©2023 Create by github/guozi007a</span>
+                    </Footer>
+                </Layout>
+            </Layout>
+        </>
+    )
 }
 
 export default Home

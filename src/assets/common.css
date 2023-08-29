@@ -12,8 +12,11 @@ body {
     font-weight: 400;
 }
 body {
-    font-size: 1.6rem;
-    color: var(--primary-dark);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    font-size: 1.4rem;
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums; /* 数字字体等宽 */ 
+    color: var(--text-color-dark);
 }
 hr {
     box-sizing: content-box;
@@ -31,8 +34,12 @@ a {
     text-decoration: none;
 }
 a:-webkit-any-link {
-   color: var(--primary-dark); 
+   color: var(--text-color-dark); 
 }
 .hide {
     display: none !important;
+}
+[class^="dark-"] { /* 暗夜模式样式前缀 */
+    background-color: #000;
+    color: var(--text-color-light);
 }
