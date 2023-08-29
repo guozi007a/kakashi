@@ -22,15 +22,16 @@
             width: 100%;
             display: flex;
             flex-wrap: wrap;
-            gap: 4rem;
+            gap: 2rem;
             box-sizing: border-box;
             padding: 4rem;
 
             .home_li {
-                width: 6rem;
+                width: 8.4rem;
 
                 .win_img {
-                    width: 100%;
+                    width: 6rem;
+                    margin: auto;
                     cursor: pointer;
                     
                     img {

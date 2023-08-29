@@ -8,7 +8,7 @@ import {
     VideoCameraOutlined,
 } from '@ant-design/icons'
 import { Layout, Menu, Button, theme, Breadcrumb } from 'antd'
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -18,6 +18,7 @@ const Home = () => {
     const {
         token: { colorBgContainer },
     } = theme.useToken();
+    const navigate = useNavigate()
 
     return (
         <>
@@ -27,7 +28,18 @@ const Home = () => {
                 }}
             >
                 <Sider trigger={null} collapsible collapsed={collapsed}>
-                    <div className="demo-logo-vertical" />
+                    <div className="demo-logo-vertical"
+                        style={{
+                            height: '32px',
+                            margin: '16px',
+                            backgroundColor: 'rgba(255,255,255,.2)',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                        }}
+                        onClick={() => {
+                            navigate('/')
+                        }}
+                    />
                     <Menu
                     theme="dark"
                     mode="inline"
@@ -92,6 +104,28 @@ const Home = () => {
                                 }
                             ]
                         },
+                        {
+                            key: 'dev-log',
+                            icon: <UserOutlined />,
+                            label: '开发日志',
+                            children: [
+                                {
+                                    key: 'publish-log',
+                                    icon: <UserOutlined />,
+                                    label: '发布日志',
+                                },
+                                {
+                                    key: 'manage-log',
+                                    icon: <UserOutlined />,
+                                    label: '日志管理',
+                                },
+                                // {
+                                //     key: 'log-leave-message',
+                                //     icon: <UserOutlined />,
+                                //     label: '日志留言',
+                                // }
+                            ]
+                        }
                     ]}
                     />
                 </Sider>
