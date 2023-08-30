@@ -13,6 +13,7 @@ import { items } from './menuConfig';
 import { transferOpenPath } from '~/utils/transferOpenPath';
 import { BACKSTAGE_ROOT } from '~/config/appRoot';
 import { transferSelectedPath } from '~/utils/transferSelectedPath';
+import { pathname2OpenPath } from '~/utils/pathname2OpenPath';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -39,6 +40,9 @@ const Home: React.FC = () => {
     useEffect(() => {
         const path = location.pathname.replace(BACKSTAGE_ROOT, '')
         setSelectedKeys(transferSelectedPath(path))
+
+        // console.log(pathname2OpenPath(path))
+        setOpenKeys(pathname2OpenPath(path))
 
     }, [location.pathname])
 
