@@ -1,24 +1,41 @@
 /** 管理后台首页 */
-import { useState } from "react"
+import styles from './index.module.scss'
+import React, { useState } from "react"
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
-    UploadOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
 } from '@ant-design/icons'
 import { Layout, Menu, Button, theme, Breadcrumb } from 'antd'
-import { Outlet, useNavigate } from "react-router-dom";
+import type { MenuProps } from 'antd';
+import { Outlet } from "react-router-dom";
+import logoImg from '~/assets/images/logo/logo.png'
+import { items } from './menuConfig';
 
 const { Header, Sider, Content, Footer } = Layout;
 
-const Home = () => {
+const Home: React.FC = () => {
 
-    const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer },
     } = theme.useToken();
-    const navigate = useNavigate()
+    const [collapsed, setCollapsed] = useState(false);
+    const [openKeys, setOpenKeys] = useState<string[]>()
+
+    const menuClick: MenuProps['onClick'] = (e) => {
+        console.log('click: ', e)
+        // setOpenKeys(e.keyPath)
+    }
+
+    const menuSelect: MenuProps['onSelect'] = (e) => {
+        console.log('select: ', e)
+    }
+
+    const menuOpenChange: MenuProps['onOpenChange'] = (newOpenKeys: string[]) => {
+        console.log('new open keys: ', newOpenKeys)
+        console.log('old open keys: ', openKeys)
+        // const keys = openKeys.slice(-1)
+        setOpenKeys(newOpenKeys)
+    }
 
     return (
         <>
@@ -28,105 +45,22 @@ const Home = () => {
                 }}
             >
                 <Sider trigger={null} collapsible collapsed={collapsed}>
-                    <div className="demo-logo-vertical"
-                        style={{
-                            height: '32px',
-                            margin: '16px',
-                            backgroundColor: 'rgba(255,255,255,.2)',
-                            borderRadius: '6px',
-                            cursor: 'pointer',
-                        }}
-                        onClick={() => {
-                            navigate('/')
-                        }}
-                    />
+                    <div className={styles.logo_img} title='Multi-App-blog'>
+                        <a href="/" className={styles.logo}>
+                            <img src={logoImg} alt="logo" />
+                            {
+                                collapsed ? null : <span className={styles.logo_text}>Multi-App-blog</span>
+                            }
+                        </a>
+                    </div>
                     <Menu
-                    theme="dark"
-                    mode="inline"
-                    defaultSelectedKeys={['1']}
-                    items={[
-                        {
-                            key: '1',
-                            icon: <UserOutlined />,
-                            label: 'nav 1',
-                        },
-                        {
-                            key: '2',
-                            icon: <VideoCameraOutlined />,
-                            label: 'nav 2',
-                        },
-                        {
-                            key: '3',
-                            icon: <UploadOutlined />,
-                            label: 'nav 3',
-                        },
-                        {   
-                            key: 'static-resource',
-                            icon: <VideoCameraOutlined />,
-                            label: '静态资源管理',
-                            children: [
-                                {   
-                                    key: 'upload',
-                                    icon: <UploadOutlined />,
-                                    label: '资源上传',
-                                },
-                                {
-                                    key: 'list',
-                                    icon: <UserOutlined />,
-                                    label: '资源列表',
-                                    children: [
-                                        {
-                                            key: 'images',
-                                            icon: <UploadOutlined />,
-                                            label: '图片',
-                                        },
-                                        {
-                                            key: 'video',
-                                            icon: <UploadOutlined />,
-                                            label: '音频',
-                                        },
-                                        {
-                                            key: 'other',
-                                            icon: <UploadOutlined />,
-                                            label: '其他资源'
-                                        },
-                                    ]
-                                },
-                                {
-                                    key: 'temp-keep',
-                                    icon: <UserOutlined />,
-                                    label: '临时资源',
-                                },
-                                {
-                                    key: 'config',
-                                    icon: <UserOutlined />,
-                                    label: '资源配置',
-                                }
-                            ]
-                        },
-                        {
-                            key: 'dev-log',
-                            icon: <UserOutlined />,
-                            label: '开发日志',
-                            children: [
-                                {
-                                    key: 'publish-log',
-                                    icon: <UserOutlined />,
-                                    label: '发布日志',
-                                },
-                                {
-                                    key: 'manage-log',
-                                    icon: <UserOutlined />,
-                                    label: '日志管理',
-                                },
-                                // {
-                                //     key: 'log-leave-message',
-                                //     icon: <UserOutlined />,
-                                //     label: '日志留言',
-                                // }
-                            ]
-                        }
-                    ]}
+                        theme="dark"
+                        mode="inline"
+                        items={items}
+                        onClick={menuClick}
+                        openKeys={openKeys}
+                        onSelect={menuSelect}
+                        onOpenChange={menuOpenChange}
                     />
                 </Sider>
                 <Layout>
