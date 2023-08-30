@@ -1,16 +1,18 @@
 /** 管理后台首页 */
 import styles from './index.module.scss'
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
 } from '@ant-design/icons'
 import { Layout, Menu, Button, theme, Breadcrumb } from 'antd'
 import type { MenuProps } from 'antd';
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import logoImg from '~/assets/images/logo/logo.png'
 import { items } from './menuConfig';
 import { transferOpenPath } from '~/utils/transferOpenPath';
+import { BACKSTAGE_ROOT } from '~/config/appRoot';
+import { transferSelectedPath } from '~/utils/transferSelectedPath';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -19,20 +21,26 @@ const Home: React.FC = () => {
     const {
         token: { colorBgContainer },
     } = theme.useToken();
+    const navigate = useNavigate()
     const [collapsed, setCollapsed] = useState(false);
     const [openKeys, setOpenKeys] = useState<string[]>()
-
-    const menuClick: MenuProps['onClick'] = (e) => {
-        console.log('click: ', e)
-    }
+    const [selectedKeys, setSelectedKeys] = useState<string[]>()
 
     const menuSelect: MenuProps['onSelect'] = (e) => {
-        console.log('select: ', e)
+        console.log('select: ', e.keyPath)
+        setSelectedKeys(e.keyPath)
+        navigate(BACKSTAGE_ROOT + e.key.replace(/_/g, '/'))
     }
 
     const menuOpenChange: MenuProps['onOpenChange'] = (openKeys: string[]) => {
         setOpenKeys(transferOpenPath(openKeys))
     }
+
+    useEffect(() => {
+        const path = location.pathname.replace(BACKSTAGE_ROOT, '')
+        setSelectedKeys(transferSelectedPath(path))
+
+    }, [location.pathname])
 
     return (
         <>
@@ -54,8 +62,8 @@ const Home: React.FC = () => {
                         theme="dark"
                         mode="inline"
                         items={items}
-                        onClick={menuClick}
                         openKeys={openKeys}
+                        selectedKeys={selectedKeys}
                         onSelect={menuSelect}
                         onOpenChange={menuOpenChange}
                     />
