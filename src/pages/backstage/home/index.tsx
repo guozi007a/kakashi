@@ -10,6 +10,7 @@ import type { MenuProps } from 'antd';
 import { Outlet } from "react-router-dom";
 import logoImg from '~/assets/images/logo/logo.png'
 import { items } from './menuConfig';
+import { transferOpenPath } from '~/utils/transferOpenPath';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -23,18 +24,14 @@ const Home: React.FC = () => {
 
     const menuClick: MenuProps['onClick'] = (e) => {
         console.log('click: ', e)
-        // setOpenKeys(e.keyPath)
     }
 
     const menuSelect: MenuProps['onSelect'] = (e) => {
         console.log('select: ', e)
     }
 
-    const menuOpenChange: MenuProps['onOpenChange'] = (newOpenKeys: string[]) => {
-        console.log('new open keys: ', newOpenKeys)
-        console.log('old open keys: ', openKeys)
-        // const keys = openKeys.slice(-1)
-        setOpenKeys(newOpenKeys)
+    const menuOpenChange: MenuProps['onOpenChange'] = (openKeys: string[]) => {
+        setOpenKeys(transferOpenPath(openKeys))
     }
 
     return (

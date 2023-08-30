@@ -14,51 +14,51 @@ export const items: MenuProps['items'] = [
         label: '静态资源管理',
         children: [
             {   
-                key: 'upload',
+                key: 'static-resource_upload',
                 icon: <UploadOutlined />,
                 label: '资源上传',
             },
             {
-                key: 'list',
+                key: 'static-resource_list',
                 icon: <UserOutlined />,
                 label: '资源列表',
                 children: [
                     {
-                        key: 'images',
+                        key: 'static-resource_list_images',
                         icon: <UploadOutlined />,
                         label: '图片',
                     },
                     {
-                        key: 'video',
+                        key: 'static-resource_list_video',
                         icon: <UploadOutlined />,
                         label: '音频',
                     },
                     {
-                        key: 'other',
+                        key: 'static-resource_list_other',
                         icon: <UploadOutlined />,
                         label: '其他资源'
                     },
                 ]
             },
             {
-                key: 'temp-keep',
+                key: 'static-resource_temp-keep',
                 icon: <UserOutlined />,
                 label: '临时资源',
                 children: [
                     {
-                        key: 'test1',
+                        key: 'static-resource_temp-keep_test1',
                         icon: <UploadOutlined />,
                         label: '测试路由1'
                     },
                     {
-                        key: 'test2',
+                        key: 'static-resource_temp-keep_test2',
                         icon: <UploadOutlined />,
                         label: '测试路由2'
                     },
                 ]
             },
             {
-                key: 'config',
+                key: 'static-resource_config',
                 icon: <UserOutlined />,
                 label: '资源配置',
             }
@@ -70,17 +70,17 @@ export const items: MenuProps['items'] = [
         label: '开发日志',
         children: [
             {
-                key: 'publish-log',
+                key: 'dev-log_publish-log',
                 icon: <UserOutlined />,
                 label: '发布日志',
             },
             {
-                key: 'manage-log',
+                key: 'dev-log_manage-log',
                 icon: <UserOutlined />,
                 label: '日志管理',
             },
             // {
-            //     key: 'log-leave-message',
+            //     key: 'dev-log_log-leave-message',
             //     icon: <UserOutlined />,
             //     label: '日志留言',
             // }
