@@ -40,15 +40,10 @@ const Home: React.FC = () => {
 
     const handleCollapse = () => {
         setCollapsed(!collapsed)
-        console.log('openkeys: ', openKeys)
         // 解决菜单被collapse按钮折叠后，openKeys会被清空的问题
-        collapsed
-            ? setTimeout(() => {
-                setOpenKeys(JSON.parse(sessionStorage.getItem('collapse') ?? '[]'))
-            }, 100)
-            : sessionStorage.setItem('collapse', JSON.stringify(openKeys))
         if (collapsed) {
             let timer = 0
+            // 增加延时，优化展示效果。官方文档默认subMenuCloseDelay时间是0.1s，所以这里给定时间为100ms，达到同步效果
             timer = window.setTimeout(() => {
                 clearTimeout(timer)
                 setOpenKeys(JSON.parse(sessionStorage.getItem('collapse') ?? '[]'))
