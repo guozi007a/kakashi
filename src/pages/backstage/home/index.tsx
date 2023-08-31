@@ -14,6 +14,7 @@ import { transferOpenPath } from '~/utils/transferOpenPath';
 import { BACKSTAGE_ROOT } from '~/config/appRoot';
 import { transferSelectedPath } from '~/utils/transferSelectedPath';
 import { pathname2OpenPath } from '~/utils/pathname2OpenPath';
+import { selectKey2Position } from '~/utils/selectKey2Position';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -28,8 +29,8 @@ const Home: React.FC = () => {
     const [selectedKeys, setSelectedKeys] = useState<string[]>()
 
     const menuSelect: MenuProps['onSelect'] = (e) => {
-        console.log('select: ', e.keyPath)
-        setSelectedKeys(e.keyPath)
+        console.log('select: ', e.key)
+        setSelectedKeys(e.keyPath.reverse())
         navigate(BACKSTAGE_ROOT + e.key.replace(/_/g, '/'))
     }
 
@@ -41,7 +42,6 @@ const Home: React.FC = () => {
         const path = location.pathname.replace(BACKSTAGE_ROOT, '')
         setSelectedKeys(transferSelectedPath(path))
 
-        // console.log(pathname2OpenPath(path))
         setOpenKeys(pathname2OpenPath(path))
 
     }, [location.pathname])
@@ -87,32 +87,17 @@ const Home: React.FC = () => {
                     </Header>
                     <Breadcrumb
                         style={{
-                            margin: '16px 16px 0 16px',
+                            margin: '10px 16px 0 16px',
                         }}
-                        items={[
-                            {
-                                title: '当前位置：'
-                            },
-                            {
-                                title: 'Home',
-                            },
-                            {
-                                title: <a href="">List</a>,
-                            },
-                            {
-                                title: <a href="">App</a>,
-                            },
-                            {
-                                title: 'Usage',
-                            },
-                        ]}
+                        items={selectedKeys && selectKey2Position(selectedKeys.at(-1))}
                     />
                     <Content
                         style={{
-                            margin: '24px 16px',
+                            margin: '10px 16px 0 16px',
                             padding: 24,
                             minHeight: 280,
                             background: colorBgContainer,
+                            borderRadius: 4,
                         }}
                     >
                         <Outlet />
