@@ -2,7 +2,7 @@
 import styles from './index.module.scss'
 import { Layout } from "antd"
 import logoImg from '~/assets/images/logo/logo.png'
-import { Timeline, FloatButton } from 'antd'
+import { Timeline, FloatButton, Divider } from 'antd'
 import { ClockCircleOutlined } from '@ant-design/icons';
 
 const { Header, Content} = Layout
@@ -29,6 +29,9 @@ const ProjectDevLogs = () => {
                             <li>🗑：表示废弃了一些功能或模块。</li>
                             <li>🐞：表示修复了一些bug。</li>
                         </ul>
+                        <div className={styles.divider}>
+                            <Divider />
+                        </div>
                         <Timeline
                             style={{
                                 width: '90%',
