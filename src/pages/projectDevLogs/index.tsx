@@ -2,7 +2,7 @@
 import styles from './index.module.scss'
 import { Layout } from "antd"
 import logoImg from '~/assets/images/logo/logo.png'
-import { Timeline } from 'antd'
+import { Timeline, FloatButton } from 'antd'
 import { ClockCircleOutlined } from '@ant-design/icons';
 
 const { Header, Content} = Layout
@@ -69,6 +69,7 @@ const ProjectDevLogs = () => {
                     </Content>
                 </Layout>
             </Content>
+            <FloatButton.BackTop />
         </Layout>
     </>
 }
