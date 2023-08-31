@@ -65,7 +65,7 @@ const PublishLog = () => {
                     wrapperCol={{ span: 24 }}
                     style={{textAlign: 'center'}}
                 >
-                    <Checkbox>Remember me</Checkbox>
+                    <Checkbox>我已写好日志内容，确认发布</Checkbox>
                 </Form.Item>
 
                 <Form.Item
@@ -73,7 +73,7 @@ const PublishLog = () => {
                     style={{textAlign: 'center'}}
                 >
                     <Button type="primary" htmlType="submit">
-                        Submit
+                        发布日志
                     </Button>
                 </Form.Item>
             </Form>
