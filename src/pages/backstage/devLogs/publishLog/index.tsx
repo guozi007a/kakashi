@@ -34,27 +34,34 @@ const PublishLog = () => {
     const handleChange = (changedValues: Record<string, string>, allValues: Record<string, string>) => {
         console.log('changedValues: ', changedValues)
         console.log('allValues: ', allValues)
+
+        const keys = Object.keys(changedValues)
+        if (keys && keys.length > 1) return
+        
+        const list: InpItem[] = []
+        const k = keys[0]
     }
 
     const handleInsert = (id: string) => {
         const isHasEmptyInp = inpList.some(v => !v.content)
-        console.log('isHasEmptyInp: ', isHasEmptyInp)
         if (isHasEmptyInp) {
             message.warning('添加失败，有输入框未输入内容！')
             return
         }
-        const list: InpItem[] = []
+        const list = [...inpList]
+        const result: InpItem[] = []
         for (const v of list) {
-            list.push(v)
+            result.push(v)
             if (v.id === id) {
                 COUNT++
-                list.push({
+                result.push({
                     key: `logs${COUNT}`,
                     id: `logs${COUNT}`,
                     content: '',
                 })
             }
         }
+        setInpList(result)
     }
 
     const handleDelete = (id: string) => {
