@@ -1,6 +1,6 @@
 /** 管理后台首页 */
 import styles from './index.module.scss'
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
@@ -29,7 +29,7 @@ const Home: React.FC = () => {
     const [selectedKeys, setSelectedKeys] = useState<string[]>()
 
     const menuSelect: MenuProps['onSelect'] = (e) => {
-        console.log('select: ', e.key)
+        // console.log('select: ', e.key)
         setSelectedKeys(e.keyPath.reverse())
         navigate(BACKSTAGE_ROOT + e.key.replace(/_/g, '/'))
     }
@@ -38,10 +38,17 @@ const Home: React.FC = () => {
         setOpenKeys(transferOpenPath(openKeys))
     }
 
+    const handleCollapse = () => {
+        setCollapsed(!collapsed)
+        // 解决菜单被collapse按钮折叠后，openKeys会被清空的问题
+        collapsed
+            ? setOpenKeys(JSON.parse(sessionStorage.getItem('collapse') ?? '[]'))
+            : sessionStorage.setItem('collapse', JSON.stringify(openKeys))
+    }
+
     useEffect(() => {
         const path = location.pathname.replace(BACKSTAGE_ROOT, '')
         setSelectedKeys(transferSelectedPath(path))
-
         setOpenKeys(pathname2OpenPath(path))
 
     }, [location.pathname])
@@ -53,7 +60,11 @@ const Home: React.FC = () => {
                     minHeight: '100vh',
                 }}
             >
-                <Sider trigger={null} collapsible collapsed={collapsed}>
+                <Sider
+                    trigger={null}
+                    collapsible
+                    collapsed={collapsed}
+                >
                     <div className={styles.logo_img} title='Multi-App-blog'>
                         <a href="/" className={styles.logo}>
                             <img src={logoImg} alt="logo" />
@@ -74,16 +85,16 @@ const Home: React.FC = () => {
                 </Sider>
                 <Layout>
                     <Header style={{ padding: 0, background: colorBgContainer }}>
-                    <Button
-                        type="text"
-                        icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                        onClick={() => setCollapsed(!collapsed)}
-                        style={{
-                            fontSize: '16px',
-                            width: 64,
-                            height: 64,
-                        }}
-                    />
+                        <Button
+                            type="text"
+                            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                            onClick={handleCollapse}
+                            style={{
+                                fontSize: '16px',
+                                width: 64,
+                                height: 64,
+                            }}
+                        />
                     </Header>
                     <Breadcrumb
                         style={{

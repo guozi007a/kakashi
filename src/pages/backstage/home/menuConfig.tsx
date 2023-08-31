@@ -37,13 +37,13 @@ export const items: MenuItemConfig[] = [
                         key: 'static-resource_list_images',
                         real: 'images',
                         icon: <UploadOutlined />,
-                        label: '图片',
+                        label: '图片资源',
                     },
                     {
                         key: 'static-resource_list_video',
                         real: 'video',
                         icon: <UploadOutlined />,
-                        label: '音频',
+                        label: '音频资源',
                     },
                     {
                         key: 'static-resource_list_other',
