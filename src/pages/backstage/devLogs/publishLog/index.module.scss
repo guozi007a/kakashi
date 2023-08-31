@@ -4,4 +4,13 @@
     padding: 5rem 0;
     display: flex;
     justify-content: center;
+
+    .space {
+        width: 100%;
+        display: flex;
+
+        .space_item:nth-child(1) {
+            flex: auto;
+        }
+    }
 }
