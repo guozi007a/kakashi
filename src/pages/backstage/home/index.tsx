@@ -11,7 +11,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import logoImg from '~/assets/images/logo/logo.png'
 import { items } from './menuConfig';
 import { transferOpenPath } from '~/utils/transferOpenPath';
-import { BACKSTAGE_ROOT } from '~/config/appRoot';
+import { BACKSTAGE_ROOT, BACKSTAGE_ROUTE } from '~/config/appRoot';
 import { transferSelectedPath } from '~/utils/transferSelectedPath';
 import { pathname2OpenPath } from '~/utils/pathname2OpenPath';
 import { selectKey2Position } from '~/utils/selectKey2Position';
@@ -54,7 +54,10 @@ const Home: React.FC = () => {
     }
 
     useEffect(() => {
-        const path = location.pathname.replace(BACKSTAGE_ROOT, '')
+        // 根路径可能是'/backstage'，这里需要判断后再转换
+        const path = location.pathname === BACKSTAGE_ROUTE
+            ? location.pathname.replace(BACKSTAGE_ROUTE, '')
+            : location.pathname.replace(BACKSTAGE_ROOT, '')
         setSelectedKeys(transferSelectedPath(path))
         setOpenKeys(pathname2OpenPath(path))
 
