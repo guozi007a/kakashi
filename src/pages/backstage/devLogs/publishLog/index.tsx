@@ -2,6 +2,7 @@
 import styles from './index.module.scss'
 import { Button, Checkbox, Form, Input, Space, message } from 'antd';
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 export interface InpItem {
     key: React.Key
@@ -13,13 +14,14 @@ type FieldType = {
     confirm?: string
 };
 
-let COUNT = 0
-
-const initVal = (): InpItem[] =>  ([{
-    key: `logs${COUNT}`,
-    id: `logs${COUNT}`,
-    content: '',
-}])
+const initVal = (): InpItem[] => {
+    const id = uuidv4()
+    return ([{
+        key: id,
+        id,
+        content: '',
+    }])
+}
 
 const PublishLog = () => {
     const [form] = Form.useForm();
@@ -27,7 +29,6 @@ const PublishLog = () => {
 
     const onFinish = (values: any) => {
         console.log('Success:', values);
-        COUNT++
         setInpList(initVal())
     };
     
@@ -66,12 +67,7 @@ const PublishLog = () => {
         for (const v of list) {
             result.push(v)
             if (v.id === id) {
-                COUNT++
-                result.push({
-                    key: `logs${COUNT}`,
-                    id: `logs${COUNT}`,
-                    content: '',
-                })
+                result.push(initVal()[0])
             }
         }
         setInpList(result)
