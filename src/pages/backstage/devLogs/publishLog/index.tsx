@@ -14,32 +14,45 @@ type FieldType = {
 };
 
 let COUNT = 0
-const initVal: InpItem[] = [{
+
+const initVal = (): InpItem[] =>  ([{
     key: `logs${COUNT}`,
     id: `logs${COUNT}`,
     content: '',
-}]
+}])
 
 const PublishLog = () => {
-    const [inpList, setInpList] = useState<InpItem[]>(initVal)
+    const [form] = Form.useForm();
+    const [inpList, setInpList] = useState<InpItem[]>(initVal())
 
     const onFinish = (values: any) => {
         console.log('Success:', values);
+        COUNT++
+        setInpList(initVal())
     };
     
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
 
-    const handleChange = (changedValues: Record<string, string>, allValues: Record<string, string>) => {
-        console.log('changedValues: ', changedValues)
-        console.log('allValues: ', allValues)
+    const handleChange = (changedValues: Record<string, string>, _: Record<string, string>) => {
+        // console.log('changedValues: ', changedValues)
+        // console.log('allValues: ', allValues)
 
         const keys = Object.keys(changedValues)
+        // console.log('keys: ', keys)
         if (keys && keys.length > 1) return
         
-        const list: InpItem[] = []
         const k = keys[0]
+        const list: InpItem[] = inpList.map((v) => {
+            return v.id === k
+                ? {
+                    ...v,
+                    content: changedValues[k]
+                }
+                : v
+        })
+        setInpList(list)
     }
 
     const handleInsert = (id: string) => {
@@ -72,6 +85,19 @@ const PublishLog = () => {
         setInpList(inpList.filter(v => v.id !== id))
         message.success('删除成功！')
     }
+
+    const handleClear = (id: string) => {
+        form.resetFields([id])
+        const list = inpList.map((v) => {
+            return v.id === id
+                ? {
+                    ...v,
+                    content: '',
+                }
+                : v
+        })
+        setInpList(list)
+    }
     
     return <>
         <div className={styles.publish_wrap}>
@@ -83,6 +109,7 @@ const PublishLog = () => {
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
                 onValuesChange={handleChange}
+                form={form}
             >
                 {
                     inpList.map((v) => {
@@ -106,6 +133,11 @@ const PublishLog = () => {
                                             handleDelete(v.id)
                                         }}
                                     >删除</Button>
+                                    <Button type='primary' className={styles.clear_btn}
+                                        onClick={() => {
+                                            handleClear(v.id)
+                                        }}
+                                    >清空</Button>
                                 </Space>
                             </Form.Item>
                         )
@@ -118,7 +150,7 @@ const PublishLog = () => {
                     wrapperCol={{ span: 24 }}
                     style={{textAlign: 'center'}}
                 >
-                    <Checkbox>我已写好日志内容，确认发布</Checkbox>
+                    <Checkbox>我已完成日志内容编辑，确认发布</Checkbox>
                 </Form.Item>
 
                 <Form.Item

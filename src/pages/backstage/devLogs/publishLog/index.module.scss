@@ -12,5 +12,14 @@
         .space_item:nth-child(1) {
             flex: auto;
         }
+
+        .clear_btn {
+            background-color: var(--button-green);
+            color: var(--text-color-light);
+
+            &:hover {
+                background-color: var(--button-green-hover);
+            }
+        }
     }
 }
