@@ -122,7 +122,7 @@ const PublishLog = () => {
                             >
                                 {/* classNames通过item属性，会为Space中的每一个子元素的wrap添加一个类名 */}
                                 <Space className={styles.space} classNames={{item: styles.space_item}}>
-                                    <Input />
+                                    <Input autoFocus />
                                     <Button type='primary'
                                         onClick={() => {
                                             handleInsert(v.id)
