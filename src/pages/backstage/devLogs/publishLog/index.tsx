@@ -3,7 +3,7 @@ import styles from './index.module.scss'
 import { Button, Checkbox, Form, Input, Space, message } from 'antd';
 import { useState } from 'react';
 
-interface InpItem {
+export interface InpItem {
     key: React.Key
     id: string
     content?: React.ReactNode
