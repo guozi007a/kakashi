@@ -28,7 +28,17 @@
 
     .footer {
         background-color: transparent;
-        margin-top: 5rem;
+        margin-top: 4rem;
         text-align: center;
+        padding: 0;
+
+        &.summit_wrap {
+            margin-top: 2rem;
+
+            .submit {
+                width: 50%;
+                max-width: 30.5rem;
+            }
+        }
     }
 }
