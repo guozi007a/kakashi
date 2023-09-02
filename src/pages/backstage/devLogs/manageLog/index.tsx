@@ -188,6 +188,12 @@ const ManageLog = () => {
         setOperId(id)
     }
 
+    const handleClearEmpty = () => {
+        setLogList([])
+        operId && setOperId('')
+        message.success('日志列表已清空~')
+    }
+
     const handleRemoveAllLogs = () => {
         message.success('开始删除所有开发日志...')
     }
@@ -232,7 +238,7 @@ const ManageLog = () => {
                         <Footer className={styles.footer}>
                             <Space>
                                 <Button type='primary' onClick={handleReset}>重置列表</Button>
-                                <Button type='primary'>清空列表</Button>
+                                <Button type='primary' onClick={handleClearEmpty}>清空列表</Button>
                                 <Popconfirm
                                     title="*注意"
                                     description="删除全部日志的操作，将会清除所有项目的全部开发日志记录，你确定要继续吗？"
