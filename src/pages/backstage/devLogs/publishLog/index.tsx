@@ -3,7 +3,7 @@ import styles from './index.module.scss'
 import { Button, Checkbox, Form, Input, Space, message } from 'antd';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { request } from '~/apis/request';
+import { publishLogsAPI } from '~/apis/backstage/devLogs';
 
 export interface InpItem {
     key: React.Key
@@ -29,16 +29,21 @@ const PublishLog = () => {
     const [inpList, setInpList] = useState<InpItem[]>(initVal())
 
     const onFinish = async (values: any) => {
-        console.log('inpList:', inpList);
         if (!values?.confirm) {
             message.warning('请先选择确认发布~')
             return
         }
 
-        const res = await request('/v1/publishLogs', { logs: inpList }, 'post')
-        if (res.code === "0") {
-            message.success('发布成功！')
-            setInpList(initVal())
+        try {
+            const res = await publishLogsAPI(inpList)
+            if (res.code === "0") {
+                message.success('发布成功！')
+                setInpList(initVal())
+            } else {
+                message.error(res.message)
+            }
+        } catch (err) {
+            console.log(err)
         }
     };
     
@@ -47,11 +52,7 @@ const PublishLog = () => {
     };
 
     const handleChange = (changedValues: Record<string, string>, _: Record<string, string>) => {
-        // console.log('changedValues: ', changedValues)
-        // console.log('allValues: ', allValues)
-
         const keys = Object.keys(changedValues)
-        // console.log('keys: ', keys)
         if (keys && keys.length > 1) return
         
         const k = keys[0]

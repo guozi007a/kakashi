@@ -2,12 +2,41 @@
 import styles from './index.module.scss'
 import { Layout } from "antd"
 import logoImg from '~/assets/images/logo/logo.png'
-import { Timeline, FloatButton, Divider } from 'antd'
+import { Timeline, FloatButton, Divider, Tag } from 'antd'
 import { ClockCircleOutlined } from '@ant-design/icons';
+import { getAllLogsAPI } from '~/apis/backstage/devLogs';
+import { useState, useEffect } from 'react';
 
 const { Header, Content} = Layout
 
 const ProjectDevLogs = () => {
+
+    const [logs, setLogs] = useState<Record<string, any>[]>([])
+
+    useEffect(() => { 
+        const getLogs = async () => {
+            const res = await getAllLogsAPI()
+            if (res.code === '0') {
+                const list = res.data ?? []
+                const result = list.map((v: Record<string, any>) => {
+                    if (v.date) {
+                        return {
+                            label: <Tag color="#87d068">{v.date}</Tag>,
+                            dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
+                            color: 'green',
+                        }
+                    } else if (v.content) {
+                        return {
+                            children: v.content,
+                        }
+                    }
+                })
+                setLogs(result)
+            }
+        }
+        getLogs()
+    }, [])
+
     return <>
         <Layout>
             <Header className={styles.top_header}>
@@ -39,35 +68,7 @@ const ProjectDevLogs = () => {
                                 marginTop: '5rem',
                             }}
                             mode='left'
-                            items={[
-                                {
-                                    label: '2015-09-01',
-                                    dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
-                                    color: 'green',
-                                },
-                                ...new Array(3).fill({
-                                    children: 'Technical testingxxx',
-                                }),
-                                {
-                                    label: '2015-09-01 09:12:11',
-                                    dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
-                                    color: 'green',
-                                },
-                                ...new Array(5).fill({
-                                    children: 'Solve initial network problems',
-                                }),
-                                {
-                                    children: 'Technical testing',
-                                },
-                                {
-                                    label: '2015-09-01 09:12:11',
-                                    dot: <ClockCircleOutlined style={{ fontSize: '16px' }} />,
-                                    color: 'green',
-                                },
-                                ...new Array(2).fill({
-                                    children: 'Network problems being solved',
-                                }),
-                            ]}
+                            items={logs}
                         />
                     </Content>
                 </Layout>

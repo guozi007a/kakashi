@@ -7,6 +7,7 @@ import locale from 'antd/es/date-picker/locale/zh_CN';
 import { InpItem } from '../publishLog';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { getDateLogsAPI } from '~/apis/backstage/devLogs';
 
 
 type PropsConfig = {
@@ -18,14 +19,6 @@ type PropsConfig = {
 }
 
 const { Header, Content, Footer } = Layout
-
-const data: InpItem[] = [
-    { key: 'logs0', id: 'logs0', content: 'Racing car sprays burning fuel into crowd.' },
-    { key: 'logs1', id: 'logs1', content: 'Japanese princess to wed commoner.' },
-    { key: 'logs2', id: 'logs2', content: 'Australian walks 100km after outback crash.' },
-    { key: 'logs3', id: 'logs3', content: 'Man charged over missing wedding girl.' },
-    { key: 'logs4', id: 'logs4', content: 'Los Angeles battles huge wildfires.' },
-];
 
 const initLog = (): InpItem[] => {
     const id = uuidv4()
@@ -166,15 +159,16 @@ const ListItem = ({
 
 const ManageLog = () => {
 
-    const [logList, setLogList] = useState<InpItem[]>(data)
+    const [logList, setLogList] = useState<InpItem[]>([])
     const [operId, setOperId] = useState<string>('')
+    const [date, setDate] = useState<string>('')
 
-    const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-        console.log(date, dateString);
+    const onChange: DatePickerProps['onChange'] = (_, dateString) => {
+        setDate(dateString)
     };
 
     const handleReset = () => {
-        setLogList(data)
+        setLogList([])
         setOperId('')
         message.success('日志列表已重置~')
     }
@@ -198,6 +192,23 @@ const ManageLog = () => {
         message.success('开始删除所有开发日志...')
     }
 
+    const handleSearch = async (date: string) => {
+        if (!date) {
+            message.warning('缺少参数: date')
+            return
+        }
+        try {
+            const res = await getDateLogsAPI(date)
+            if (res.code === "0") {
+                setLogList(res.data)
+            } else {
+                message.error(res.message)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return <>
         <Layout className={styles.manage_wrap}>
             <Header className={styles.header}>
@@ -209,7 +220,11 @@ const ManageLog = () => {
                             onChange={onChange}
                         />
                     </div>
-                    <Button type='primary'>查询</Button>
+                    <Button type='primary'
+                        onClick={() => {
+                            handleSearch(date)
+                        }}
+                    >查询</Button>
                 </Space>
             </Header>
             <Content className={styles.content}>
@@ -226,7 +241,6 @@ const ManageLog = () => {
                                 operId={operId}
                                 handleOperId={handleOperId}
                             />}
-                            // loading
                             rowKey={(item) => item.key}
                         />
                         : <Empty />
