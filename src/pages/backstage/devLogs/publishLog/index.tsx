@@ -27,13 +27,12 @@ const PublishLog = () => {
     const [form] = Form.useForm();
     const [inpList, setInpList] = useState<InpItem[]>(initVal())
 
-    const onFinish = (values: any) => {
+    const onFinish = async (values: any) => {
         console.log('Success:', values);
-        setInpList(initVal())
     };
     
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+    const onFinishFailed = () => {
+        message.error('验证失败')
     };
 
     const handleChange = (changedValues: Record<string, string>, _: Record<string, string>) => {
