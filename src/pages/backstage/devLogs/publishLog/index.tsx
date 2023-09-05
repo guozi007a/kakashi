@@ -3,6 +3,7 @@ import styles from './index.module.scss'
 import { Button, Checkbox, Form, Input, Space, message } from 'antd';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { request } from '~/apis/request';
 
 export interface InpItem {
     key: React.Key
@@ -28,7 +29,17 @@ const PublishLog = () => {
     const [inpList, setInpList] = useState<InpItem[]>(initVal())
 
     const onFinish = async (values: any) => {
-        console.log('Success:', values);
+        console.log('inpList:', inpList);
+        if (!values?.confirm) {
+            message.warning('请先选择确认发布~')
+            return
+        }
+
+        const res = await request('/v1/publishLogs', { logs: inpList }, 'post')
+        if (res.code === "0") {
+            message.success('发布成功！')
+            setInpList(initVal())
+        }
     };
     
     const onFinishFailed = () => {
