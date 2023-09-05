@@ -31,7 +31,7 @@ interface ResType {
 }
 
 // 这里添加返回类型Promise<ResType>,并在.then中的resolve参数改为res.data，以解决类型报错。
-export const request = (url: string, params?: Record<string, any>, method = 'get'): Promise<ResType> => {
+export const request = (url: string, params?: Record<string, any> | null | undefined, method = 'get'): Promise<ResType> => {
     return new Promise((resolve, reject) => {
 
         let config: Record<string, any> = {}

@@ -7,7 +7,7 @@ import locale from 'antd/es/date-picker/locale/zh_CN';
 import { InpItem } from '../publishLog';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { getDateLogsAPI } from '~/apis/backstage/devLogs';
+import { getDateLogsAPI, clearDateLogsAPI, clearAllLogsAPI } from '~/apis/backstage/devLogs';
 
 
 type PropsConfig = {
@@ -162,6 +162,7 @@ const ManageLog = () => {
     const [logList, setLogList] = useState<InpItem[]>([])
     const [operId, setOperId] = useState<string>('')
     const [date, setDate] = useState<string>('')
+    const [isClearDateLog, setisClearDateLog] = useState(false)
 
     const onChange: DatePickerProps['onChange'] = (_, dateString) => {
         setDate(dateString)
@@ -188,8 +189,18 @@ const ManageLog = () => {
         message.success('日志列表已清空~')
     }
 
-    const handleRemoveAllLogs = () => {
-        message.success('开始删除所有开发日志...')
+    const handleRemoveAllLogs = async () => {
+        try {
+            const res = await clearAllLogsAPI()
+            if (res.code === '0') {
+                setLogList([])
+                message.success('已清空所有日志')
+            } else {
+                message.error(res.message)
+            }
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     const handleSearch = async (date: string) => {
@@ -201,11 +212,32 @@ const ManageLog = () => {
             const res = await getDateLogsAPI(date)
             if (res.code === "0") {
                 setLogList(res.data)
+                if (res.data.length) {
+                    message.success('查询成功')
+                } else {
+                    message.success('这一天没有日志哦~')
+                }
             } else {
                 message.error(res.message)
             }
         } catch (err) {
             console.log(err)
+        }
+    }
+
+    const submitUpdate = async () => {
+        if (isClearDateLog) {
+            try {
+                const res = await clearDateLogsAPI(date)
+                if (res.code === '0') {
+                    message.success('当日日志已清空')
+                } else {
+                    message.error(res.message)
+                }
+            } catch (err) {
+                console.log(err)
+            }
+            return
         }
     }
 
@@ -252,7 +284,13 @@ const ManageLog = () => {
                         <Footer className={styles.footer}>
                             <Space>
                                 <Button type='primary' onClick={handleReset}>重置列表</Button>
-                                <Button type='primary' onClick={handleClearEmpty}>清空列表</Button>
+                                <Button type='primary'
+                                    onClick={() => {
+                                        handleClearEmpty()
+                                        setisClearDateLog(true)
+                                        message.success('已清空，请提交更新~')
+                                    }}
+                                >清空列表</Button>
                                 <Popconfirm
                                     title="*注意"
                                     description="删除全部日志的操作，将会清除所有项目的全部开发日志记录，你确定要继续吗？"
@@ -266,7 +304,7 @@ const ManageLog = () => {
                             </Space>
                         </Footer>
                         <Footer className={`${styles.footer} ${styles.summit_wrap}`}>
-                            <Button type='primary' className={styles.submit}>提交更新</Button>
+                            <Button type='primary' className={styles.submit} onClick={submitUpdate}>提交更新</Button>
                         </Footer>
                     </>
                     : null
