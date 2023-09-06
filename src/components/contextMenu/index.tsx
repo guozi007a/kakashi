@@ -21,7 +21,7 @@ const ContextMenu = ({
     >
         <ul className={styles.menu_ul}>
             {
-                [1, 2, 3].map((v, i) => {
+                [1, 2, 3].map((_, i) => {
                     return <li key={i} className={styles.menu_li}>进入页面</li>
                 })
             }
