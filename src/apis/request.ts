@@ -43,19 +43,12 @@ export const request = (url: string, params?: Record<string, any> | null | undef
                 params,
             }
         } else if (method === 'post' || method === 'put') {
-            // 参数要单独处理，data要转换成json形式，headers要用x-www-form-urlencoded
-            const result: Record<string, any> = {}
-            if (params) {
-                for (const k in params) {
-                    result[k] = JSON.stringify(params[k])
-                }
-            }
             config = {
                 url,
                 method,
-                data: result,
+                data: params ? JSON.stringify(params) : '', // 前端使用json类型请求时，data直接用JSON.stringify处理即可
                 headers: {
-                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                    "Content-Type": "application/json; charset=UTF-8",
                 },
             }
         }
