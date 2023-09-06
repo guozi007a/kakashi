@@ -8,7 +8,7 @@ const instance = axios.create({
 })
 
 let RequstTime = 0 // 上次发起请求的时间戳
-let SpaceTime = 1000 // 两次请求之间的最小间隔时间，单位ms
+let SpaceTime = 80 // 两次请求之间的最小间隔时间，单位ms
 
 // 添加请求拦截器
 instance.interceptors.request.use(function (config) {
@@ -55,7 +55,7 @@ const commonReq = (config: Record<string, any>): Promise<ResType> => {
                 }
             })
             .catch(err => {
-                // 在这里对错误进行统一处理
+                // 在这里对错误进行统一处理，不需要额外用try/catch捕获了
                 typeof err === 'string' ? message.error(err) : console.log('err: ', err)
                 // reject(err)
             })
