@@ -1,7 +1,7 @@
 /** 管理后台-开发日志-管理日志 */
 import styles from './index.module.scss'
 import type { DatePickerProps } from 'antd';
-import { Layout, DatePicker, Button, Space, Empty, List, Input, message, Popconfirm } from 'antd'
+import { Layout, DatePicker, Button, Space, Empty, List, Input, message, Popconfirm, Tooltip } from 'antd'
 import 'dayjs/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 import { InpItem } from '../publishLog';
@@ -168,10 +168,23 @@ const ManageLog = () => {
         setDate(dateString)
     };
 
-    const handleReset = () => {
-        setLogList([])
-        setOperId('')
-        message.success('日志列表已重置~')
+    const handleReset = async () => {
+        try {
+            const res = await getDateLogsAPI(date)
+            if (res.code === "0") {
+                setLogList(res.data)
+                setOperId('')
+                if (res.data.length) {
+                    message.success('日志列表已重置')
+                } else {
+                    message.success('该日没有日志哦~')
+                }
+            } else {
+                message.error(res.message)
+            }
+        } catch (err) {
+            console.log(err)
+        }
     }
 
 
@@ -229,7 +242,7 @@ const ManageLog = () => {
                 if (res.data.length) {
                     message.success('查询成功')
                 } else {
-                    message.success('这一天没有日志哦~')
+                    message.success('该日没有日志哦~')
                 }
             } else {
                 message.error(res.message)
@@ -300,7 +313,12 @@ const ManageLog = () => {
                     ? <>
                         <Footer className={styles.footer}>
                             <Space>
-                                <Button type='primary' onClick={handleReset}>重置列表</Button>
+                                <Tooltip
+                                    placement="topRight"
+                                    title="在将增加、删除、编辑等操作提交更新之前，都可以通过重置列表来让列表恢复到修改前的状态"
+                                >
+                                    <Button type='primary' onClick={handleReset}>重置列表</Button>
+                                </Tooltip>
                                 <Button type='primary' onClick={handleClearEmpty}>清空列表</Button>
                                 <Popconfirm
                                     title="*注意"
@@ -315,7 +333,12 @@ const ManageLog = () => {
                             </Space>
                         </Footer>
                         <Footer className={`${styles.footer} ${styles.summit_wrap}`}>
-                            <Button type='primary' className={styles.submit} onClick={submitUpdate}>提交更新</Button>
+                            <Tooltip
+                                placement="bottom"
+                                title="增加、删除、编辑等三种方式，都需要提交更新，以完成最终操作"
+                            >
+                        <Button type='primary' className={styles.submit} onClick={submitUpdate}>提交更新</Button>
+                        </Tooltip>
                         </Footer>
                     </>
                     : null
