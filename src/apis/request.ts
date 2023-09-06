@@ -30,28 +30,11 @@ interface ResType {
     data: any
 }
 
+type MethodType = 'get' | 'post' | 'put' | 'delete'
+
 // 这里添加返回类型Promise<ResType>,并在.then中的resolve参数改为res.data，以解决类型报错。
-export const request = (url: string, params?: Record<string, any> | null | undefined, method = 'get'): Promise<ResType> => {
+const commonReq = (config: Record<string, any>): Promise<ResType> => {
     return new Promise((resolve, reject) => {
-
-        let config: Record<string, any> = {}
-
-        if (method === 'get' || method === 'delete') {
-            config = {
-                url,
-                method,
-                params,
-            }
-        } else if (method === 'post' || method === 'put') {
-            config = {
-                url,
-                method,
-                data: params ? JSON.stringify(params) : '', // 前端使用json类型请求时，data直接用JSON.stringify处理即可
-                headers: {
-                    "Content-Type": "application/json; charset=UTF-8",
-                },
-            }
-        }
         const promise = instance(config)
 
         promise
@@ -59,3 +42,54 @@ export const request = (url: string, params?: Record<string, any> | null | undef
             .catch(err => reject(err))
     })
 }
+
+const pureConfig = (url: string, method: MethodType, params?: Record<string, any>) => ({
+    url,
+    method,
+    params,
+})
+
+const jsonConfig = (url: string, method: MethodType, params?: Record<string, any>) => ({
+    url,
+    method,
+    data: params ? JSON.stringify(params) : '', // 当content-type为json时，传输数据为json字符串
+    headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+    },
+})
+
+const formConfig = (url: string, method: MethodType, params?: Record<string, any>) => {
+    let transferMsg = ''
+
+    if (params) {
+        for (const [k, v] of Object.entries(params)) {
+            if (v === null || v === undefined || v === '') {
+                continue
+            }
+            transferMsg = transferMsg
+                ? (transferMsg + `&${k}=${encodeURIComponent(v)}`)
+                : `${k}=${encodeURIComponent(v)}`
+        }
+    }
+
+    return {
+        url,
+        method,
+        data: transferMsg, // 当content-type为x-www-form-urlencoded时，传输数据要拼接为平行键值对。仅用于传输简单数据类型
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        },
+    }
+}
+
+export const get = (url: string, params?: Record<string, any>) => commonReq(pureConfig(url, 'get', params))
+
+export const del = (url: string, params?: Record<string, any>) => commonReq(pureConfig(url, 'delete', params))
+
+export const post = (url: string, params?: Record<string, any>) => commonReq(jsonConfig(url, 'post', params))
+
+export const put = (url: string, params?: Record<string, any>) => commonReq(jsonConfig(url, 'put', params))
+
+export const postForm = (url: string, params?: Record<string, any>) => commonReq(formConfig(url, 'post', params))
+
+export const putForm = (url: string, params?: Record<string, any>) => commonReq(formConfig(url, 'put', params))
