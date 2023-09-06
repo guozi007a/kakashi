@@ -34,17 +34,9 @@ const PublishLog = () => {
             return
         }
 
-        try {
-            const res = await publishLogsAPI(inpList)
-            if (res.code === "0") {
-                message.success('发布成功！')
-                setInpList(initVal())
-            } else {
-                message.error(res.message)
-            }
-        } catch (err) {
-            console.log(err)
-        }
+        await publishLogsAPI(inpList)
+        message.success('发布成功！')
+        setInpList(initVal())
     };
     
     const onFinishFailed = () => {

@@ -1,14 +1,22 @@
 /** 封装axios */
 import axios from "axios"
+import { message } from "antd"
 
 const instance = axios.create({
     baseURL: import.meta.env.ENV_PREFIX,
     timeout: 20000,
 })
 
+let RequstTime = 0 // 上次发起请求的时间戳
+let SpaceTime = 1000 // 两次请求之间的最小间隔时间，单位ms
+
 // 添加请求拦截器
 instance.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
+    if (Date.now() - RequstTime <= SpaceTime) {
+        return Promise.reject('操作过快，请稍后重试');
+    }
+    RequstTime = Date.now()
     return config;
   }, function (error) {
     // 对请求错误做些什么
@@ -34,12 +42,23 @@ type MethodType = 'get' | 'post' | 'put' | 'delete'
 
 // 这里添加返回类型Promise<ResType>,并在.then中的resolve参数改为res.data，以解决类型报错。
 const commonReq = (config: Record<string, any>): Promise<ResType> => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _) => {
         const promise = instance(config)
 
         promise
-            .then(res => resolve(res.data))
-            .catch(err => reject(err))
+            .then(res => {
+                // 在这里对不同的code进行分类处理
+                if (res.data.code === '0') {
+                    resolve(res.data)
+                } else {
+                    message.error(res.data.message)
+                }
+            })
+            .catch(err => {
+                // 在这里对错误进行统一处理
+                typeof err === 'string' ? message.error(err) : console.log('err: ', err)
+                // reject(err)
+            })
     })
 }
 

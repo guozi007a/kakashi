@@ -169,21 +169,13 @@ const ManageLog = () => {
     };
 
     const handleReset = async () => {
-        try {
-            const res = await getDateLogsAPI(date)
-            if (res.code === "0") {
-                setLogList(res.data)
-                setOperId('')
-                if (res.data.length) {
-                    message.success('日志列表已重置')
-                } else {
-                    message.success('该日没有日志哦~')
-                }
-            } else {
-                message.error(res.message)
-            }
-        } catch (err) {
-            console.log(err)
+        const res = await getDateLogsAPI(date)
+        setLogList(res.data)
+        setOperId('')
+        if (res.data.length) {
+            message.success('日志列表已重置')
+        } else {
+            message.success('该日没有日志哦~')
         }
     }
 
@@ -201,33 +193,17 @@ const ManageLog = () => {
             message.warning('日期不能为空')
             return
         }
-        try {
-            const res = await clearDateLogsAPI(date)
-            if (res.code === '0') {
-                message.success('当日日志已清空')
-                setLogList([])
-                operId && setOperId('')
-            } else {
-                message.error(res.message)
-            }
-        } catch (err) {
-            console.log(err)
-        }
+        await clearDateLogsAPI(date)
+        message.success('当日日志已清空')
+        setLogList([])
+        operId && setOperId('')
     }
 
     const handleRemoveAllLogs = async () => {
-        try {
-            const res = await clearAllLogsAPI()
-            if (res.code === '0') {
-                setLogList([])
-                message.success('已清空所有日志')
-                operId && setOperId('')
-            } else {
-                message.error(res.message)
-            }
-        } catch (err) {
-            console.log(err)
-        }
+        await clearAllLogsAPI()
+        setLogList([])
+        message.success('已清空所有日志')
+        operId && setOperId('')
     }
 
     const handleSearch = async () => {
@@ -235,20 +211,12 @@ const ManageLog = () => {
             message.warning('缺少参数: date')
             return
         }
-        try {
-            const res = await getDateLogsAPI(date)
-            if (res.code === "0") {
-                setLogList(res.data)
-                if (res.data.length) {
-                    message.success('查询成功')
-                } else {
-                    message.success('该日没有日志哦~')
-                }
-            } else {
-                message.error(res.message)
-            }
-        } catch (err) {
-            console.log(err)
+        const res = await getDateLogsAPI(date)
+        setLogList(res.data)
+        if (res.data.length) {
+            message.success('查询成功')
+        } else {
+            message.success('该日没有日志哦~')
         }
     }
 
@@ -261,16 +229,8 @@ const ManageLog = () => {
             message.warning('新增或编辑中，无法提交更新~')
             return
         }
-        try {
-            const res = await updateDateLogsAPI(date, logList)
-            if (res.code === '0') {
-                message.success('更新成功~')
-            } else {
-                message.error(res.message)
-            }
-        } catch (err) {
-            console.log(err)
-        }
+        await updateDateLogsAPI(date, logList)
+        message.success('更新成功~')
     }
 
     return <>
