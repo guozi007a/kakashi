@@ -25,3 +25,8 @@ export const clearDateLogsAPI = (date: string) => {
 export const clearAllLogsAPI = () => {
     return request('/v1/clearAllLogs', null, 'delete')
 }
+
+// 更新
+export const updateDateLogsAPI = (date: string, logs: InpItem[]) => {
+    return request('/v1/updateDateLogs', { date, logs }, 'put')
+}
