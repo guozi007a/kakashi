@@ -41,7 +41,7 @@ const ProjectDevLogs = () => {
         <Layout>
             <Header className={styles.top_header}>
                 <div className={styles.logo_wrap}>
-                    <a href={import.meta.env.BASE_URL} className={styles.logo}>
+                    <a href={import.meta.env.ENV_BASE} className={styles.logo}>
                         <img src={logoImg} alt="" />
                         <span>multi-app-blog</span>
                     </a>

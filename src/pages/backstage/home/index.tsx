@@ -76,7 +76,7 @@ const Home: React.FC = () => {
                     collapsed={collapsed}
                 >
                     <div className={styles.logo_img} title='Multi-App-blog'>
-                        <a href={import.meta.env.BASE_URL} className={styles.logo}>
+                        <a href={import.meta.env.ENV_BASE} className={styles.logo}>
                             <img src={logoImg} alt="logo" />
                             {
                                 collapsed ? null : <span className={styles.logo_text}>Multi-App-blog</span>
