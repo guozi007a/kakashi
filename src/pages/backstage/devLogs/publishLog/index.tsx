@@ -4,6 +4,7 @@ import { Button, Checkbox, Form, Input, Space, message } from 'antd';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { publishLogsAPI } from '~/apis/backstage/devLogs';
+import { shortCutKeys2LogIcon } from '~/utils/shortCutKeys2LogIcon';
 
 export interface InpItem {
     key: React.Key
@@ -121,7 +122,7 @@ const PublishLog = () => {
                             >
                                 {/* classNames通过item属性，会为Space中的每一个子元素的wrap添加一个类名 */}
                                 <Space className={styles.space} classNames={{item: styles.space_item}}>
-                                    <Input autoFocus />
+                                    <Input autoFocus key={v.key} value={shortCutKeys2LogIcon(v.content as string)} />
                                     <Button type='primary'
                                         onClick={() => {
                                             handleInsert(v.id)

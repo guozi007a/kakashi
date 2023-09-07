@@ -8,6 +8,7 @@ import { InpItem } from '../publishLog';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { getDateLogsAPI, clearDateLogsAPI, clearAllLogsAPI, updateDateLogsAPI } from '~/apis/backstage/devLogs';
+import { shortCutKeys2LogIcon } from '~/utils/shortCutKeys2LogIcon';
 
 
 type PropsConfig = {
@@ -117,7 +118,7 @@ const ListItem = ({
                             autoFocus
                             autoComplete='off'
                             required
-                            value={val}
+                            value={shortCutKeys2LogIcon(val)}
                             onChange={e => {setVal(e.target.value)}}
                         />
                         <Space>
