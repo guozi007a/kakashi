@@ -55,9 +55,11 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         // 根路径可能是'/backstage'，这里需要判断后再转换
+        console.log('pathname: ', location.pathname)
         const path = location.pathname === BACKSTAGE_ROUTE
             ? location.pathname.replace(BACKSTAGE_ROUTE, '')
             : location.pathname.replace(BACKSTAGE_ROOT, '')
+        console.log('path: ', path)
         setSelectedKeys(transferSelectedPath(path))
         setOpenKeys(pathname2OpenPath(path))
 
