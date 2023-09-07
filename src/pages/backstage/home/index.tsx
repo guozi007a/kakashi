@@ -29,8 +29,6 @@ const Home: React.FC = () => {
     const [selectedKeys, setSelectedKeys] = useState<string[]>()
 
     const menuSelect: MenuProps['onSelect'] = (e) => {
-        console.log('select: ', e.key)
-        console.log('selectpath: ', e.keyPath)
         setSelectedKeys(e.keyPath.reverse())
         navigate(BACKSTAGE_PATH + e.key.replace(/_/g, '/'))
     }
@@ -57,13 +55,9 @@ const Home: React.FC = () => {
     useEffect(() => {
         // 根路径可能是'/backstage'，这里需要判断后再转换
         const pathname = location.pathname
-        console.log('pathname: ', location.pathname)
-        console.log('BASE_URL: ', import.meta.env.BASE_URL)
-        console.log('pathname === BACKSTAGE_ROUTE: ', pathname === BACKSTAGE_ROUTE)
         const path = pathname === BACKSTAGE_ROUTE
             ? pathname.replace(BACKSTAGE_ROUTE, '')
             : pathname.replace(BACKSTAGE_ROOT, '')
-        console.log('path: ', path)
         setSelectedKeys(transferSelectedPath(path))
         setOpenKeys(pathname2OpenPath(path))
 
