@@ -29,11 +29,19 @@
             .home_li {
                 width: 8.4rem;
 
+                &.home_li1 {
+                    opacity: 0;
+
+                    .win_img {
+                        cursor: auto;
+                    }
+                }
+
                 .win_img {
                     width: 6rem;
                     margin: auto;
                     cursor: pointer;
-                    
+
                     img {
                         width: 100%;
                         overflow: hidden;

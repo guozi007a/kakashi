@@ -31,7 +31,7 @@ const Home = () => {
             <ul className={styles.home_ul}>
                 {
                     windowIcons.map((v, i) => {
-                        return <li key={v.id} className={styles.home_li}>
+                        return <li key={v.id} className={`${styles.home_li} ${i == 0 ? styles.home_li1 : ''}`}>
                             <div className={styles.win_img}
                                 onDoubleClick={() => {
                                     navigate(v.path)
