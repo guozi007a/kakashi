@@ -11,7 +11,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import logoImg from '~/assets/images/logo/logo.png'
 import { items } from './menuConfig';
 import { transferOpenPath } from '~/utils/transferOpenPath';
-import { BACKSTAGE_ROOT, BACKSTAGE_ROUTE } from '~/config/appRoot';
+import { BACKSTAGE_ROOT, BACKSTAGE_ROUTE, BACKSTAGE_PATH } from '~/config/appRoot';
 import { transferSelectedPath } from '~/utils/transferSelectedPath';
 import { pathname2OpenPath } from '~/utils/pathname2OpenPath';
 import { selectKey2Position } from '~/utils/selectKey2Position';
@@ -29,9 +29,10 @@ const Home: React.FC = () => {
     const [selectedKeys, setSelectedKeys] = useState<string[]>()
 
     const menuSelect: MenuProps['onSelect'] = (e) => {
-        // console.log('select: ', e.key)
+        console.log('select: ', e.key)
+        console.log('selectpath: ', e.keyPath)
         setSelectedKeys(e.keyPath.reverse())
-        navigate(BACKSTAGE_ROOT + e.key.replace(/_/g, '/'))
+        navigate(BACKSTAGE_PATH + e.key.replace(/_/g, '/'))
     }
 
     const menuOpenChange: MenuProps['onOpenChange'] = (openKeys: string[]) => {
@@ -55,10 +56,13 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         // 根路径可能是'/backstage'，这里需要判断后再转换
+        const pathname = location.pathname
         console.log('pathname: ', location.pathname)
-        const path = location.pathname === BACKSTAGE_ROUTE
-            ? location.pathname.replace(BACKSTAGE_ROUTE, '')
-            : location.pathname.replace(BACKSTAGE_ROOT, '')
+        console.log('BASE_URL: ', import.meta.env.BASE_URL)
+        console.log('pathname === BACKSTAGE_ROUTE: ', pathname === BACKSTAGE_ROUTE)
+        const path = pathname === BACKSTAGE_ROUTE
+            ? pathname.replace(BACKSTAGE_ROUTE, '')
+            : pathname.replace(BACKSTAGE_ROOT, '')
         console.log('path: ', path)
         setSelectedKeys(transferSelectedPath(path))
         setOpenKeys(pathname2OpenPath(path))
