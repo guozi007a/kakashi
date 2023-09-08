@@ -25,11 +25,6 @@ export default defineConfig(({ mode }) => {
                 // 禁止报错信息覆盖屏幕
                 overlay: false,
             },
-            // 请求代理
-            // proxy: {
-            //     '/about': `${env.ENV_PREFIX}/v1`,
-            //     '/list': `${env.ENV_PREFIX}/v2`,
-            // }
         },
         resolve: {
             // 设置别名
