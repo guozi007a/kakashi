@@ -15,6 +15,7 @@ import { BACKSTAGE_ROOT, BACKSTAGE_ROUTE, BACKSTAGE_PATH } from '~/config/appRoo
 import { transferSelectedPath } from '~/utils/transferSelectedPath';
 import { pathname2OpenPath } from '~/utils/pathname2OpenPath';
 import { selectKey2Position } from '~/utils/selectKey2Position';
+import Scrollbars from 'react-custom-scrollbars-2'
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -109,31 +110,34 @@ const Home: React.FC = () => {
                     </Header>
                     <Breadcrumb
                         style={{
-                            margin: '10px 16px 0 16px',
+                            margin: '0 16px',
+                            height: '32px',
+                            lineHeight: '32px',
                         }}
                         items={selectedKeys && selectKey2Position(selectedKeys.at(-1))}
                     />
                     <div className={styles.show_main}>
-
+                        <Scrollbars autoHide>
+                            <Content
+                                style={{
+                                    margin: '0 16px',
+                                    padding: 24,
+                                    minHeight: 280,
+                                    background: colorBgContainer,
+                                    borderRadius: 4,
+                                }}
+                            >
+                                <Outlet />
+                            </Content>
+                            <Footer
+                                style={{
+                                    textAlign: 'center',
+                                }}
+                            >
+                                <span>Backstage ©2023 Create by github/guozi007a</span>
+                            </Footer>
+                        </Scrollbars>
                     </div>
-                    <Content
-                        style={{
-                            margin: '10px 16px 0 16px',
-                            padding: 24,
-                            minHeight: 280,
-                            background: colorBgContainer,
-                            borderRadius: 4,
-                        }}
-                    >
-                        <Outlet />
-                    </Content>
-                    <Footer
-                        style={{
-                            textAlign: 'center',
-                        }}
-                    >
-                        <span>Backstage ©2023 Create by github/guozi007a</span>
-                    </Footer>
                 </Layout>
             </Layout>
         </>
