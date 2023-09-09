@@ -67,6 +67,7 @@ const Home: React.FC = () => {
         <>
             <Layout
                 style={{
+                    height: '100%',
                     minHeight: '100vh',
                 }}
             >
@@ -112,6 +113,9 @@ const Home: React.FC = () => {
                         }}
                         items={selectedKeys && selectKey2Position(selectedKeys.at(-1))}
                     />
+                    <div className={styles.show_main}>
+
+                    </div>
                     <Content
                         style={{
                             margin: '10px 16px 0 16px',
