@@ -2,6 +2,7 @@
 import styles from './index.module.scss'
 import { List } from 'antd';
 import { supportData } from './supportConfig';
+import UploadFile from './UploadFile';
 
 const ResourceUpload = () => {
 
@@ -19,6 +20,7 @@ const ResourceUpload = () => {
                 </List.Item>
             )}
         />
+        <UploadFile />
     </>
 }
 

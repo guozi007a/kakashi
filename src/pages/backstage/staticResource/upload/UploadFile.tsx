@@ -1,0 +1,76 @@
+/** 上传文件 */
+import { useState } from 'react'
+import { UploadOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import type { UploadProps } from 'antd';
+import { Button, Upload, Layout, Switch, Space, message } from 'antd';
+import type { UploadFile } from 'antd/es/upload/interface';
+
+const { Header } = Layout
+
+const UploadFile = () => {
+
+    const [checked, setChecked] = useState<boolean>(false)
+    const [fileList, setFileList] = useState<UploadFile[]>([]);
+    
+    const handleFilesChange: UploadProps['onChange'] = (info) => {
+        let newFileList = [...info.fileList];
+
+        console.log('info: ', info)
+    
+    
+        // 2. Read from response and show file link
+        newFileList = newFileList.map((file) => {
+          if (file.response) {
+            // Component will show file.url as link
+            file.url = file.response.url;
+          }
+          return file;
+        });
+    
+        setFileList(newFileList);
+    };
+
+    const handleSwitchChange = (checked: boolean) => {
+        setChecked(checked)
+        checked
+            ? message.success('已开启上传目录功能')
+            : message.warning('已关闭上传目录功能')
+    }
+    
+    return <>
+        <Layout>
+            <Header
+                style={{
+                    backgroundColor: '#fff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '24px',
+                    padding: 0,
+                }}
+            >
+                <h2>文件上传</h2>
+                <Space>
+                    <span style={{fontSize: '12px'}}>我要上传文件夹：</span>
+                    <Switch
+                        checkedChildren="开启"
+                        unCheckedChildren="关闭"
+                        defaultChecked={false}
+                        onChange={handleSwitchChange}
+                    />
+                </Space>
+            </Header>
+        </Layout>
+        <Upload
+            name='upfile'
+            multiple
+            onChange={handleFilesChange}
+            fileList={fileList}
+            directory={checked}
+            listType='picture'
+        >
+            <Button icon={<UploadOutlined />}>Upload</Button>
+        </Upload>
+    </>
+}
+
+export default UploadFile
