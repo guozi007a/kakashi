@@ -1,9 +1,11 @@
 /** 上传文件 */
 import { useState } from 'react'
-import { UploadOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import { Button, Upload, Layout, Switch, Space, message } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
+import { uploadDirect } from '~/apis/backstage/source';
+import { POINT } from './uploadConfig';
 
 const { Header } = Layout
 
@@ -11,6 +13,13 @@ const UploadFile = () => {
 
     const [checked, setChecked] = useState<boolean>(false)
     const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+    // Upload组件默认是选择文件后自动发送上传请求的，但是实际情况下，并不需要这么做。
+    // 一般的，我们选择文件后，都会点击上传按钮后才开始发送上传请求。
+    // 所以我们通过return false来阻止自动发送上传请求的行为。
+    const handleBeforUpload = () => {
+        return false
+    }
     
     const handleFilesChange: UploadProps['onChange'] = (info) => {
         let newFileList = [...info.fileList];
@@ -36,6 +45,15 @@ const UploadFile = () => {
             ? message.success('已开启上传目录功能')
             : message.warning('已关闭上传目录功能')
     }
+
+    const handleUpload = async () => {
+        if (!fileList || fileList.length > 1) return
+        const file = fileList[0]
+        if (file.size as number <= POINT) {
+            const res = await uploadDirect(file)
+            console.log('data: ', res.data)
+        }
+    }
     
     return <>
         <Layout>
@@ -48,7 +66,7 @@ const UploadFile = () => {
                     padding: 0,
                 }}
             >
-                <h2>文件上传</h2>
+                <h2>上传文件</h2>
                 <Space>
                     <span style={{fontSize: '12px'}}>我要上传文件夹：</span>
                     <Switch
@@ -67,9 +85,31 @@ const UploadFile = () => {
             fileList={fileList}
             directory={checked}
             listType='picture'
+            beforeUpload={handleBeforUpload}
         >
-            <Button icon={<UploadOutlined />}>Upload</Button>
+            <Button icon={<UploadOutlined />}>选择文件</Button>
         </Upload>
+        <Layout
+            style={{
+                backgroundColor: '#fff',
+                paddingTop: '24px',
+            }}
+        >
+            <Header
+                style={{
+                    backgroundColor: '#fff',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+                {
+                    fileList && fileList.length
+                        ? <Button type='primary' onClick={handleUpload}>开始上传</Button>
+                        : null
+                }
+            </Header>
+        </Layout>
     </>
 }
 

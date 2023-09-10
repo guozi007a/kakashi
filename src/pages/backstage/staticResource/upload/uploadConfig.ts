@@ -16,3 +16,15 @@ export const supportData: string[] = [
     '支持断点续传',
     '支持所有常用文件类型',
 ]
+
+/** 文件断点续传的断点大小 */
+export const POINT = 1024 * 100 // 设置为100kb
+
+/** 上传文件的类型 */
+// export interface FileType {
+//     uid: string
+//     name: string
+//     size: number
+//     lastModified: number
+//     type: string
+// }

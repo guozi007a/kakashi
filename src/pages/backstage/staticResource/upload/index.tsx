@@ -1,7 +1,7 @@
 /** 管理后台-静态资源管理-资源上传 */
 import styles from './index.module.scss'
 import { List } from 'antd';
-import { supportData } from './supportConfig';
+import { supportData } from './uploadConfig';
 import UploadFile from './UploadFile';
 
 const ResourceUpload = () => {

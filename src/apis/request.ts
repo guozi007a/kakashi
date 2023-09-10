@@ -101,6 +101,17 @@ const formConfig = (url: string, method: MethodType, params?: Record<string, any
     }
 }
 
+const fileConfig = (url: string, method: MethodType, params?: Record<string, any>) => {
+    return {
+        url,
+        method,
+        data: params,
+        headers: {
+            "Content-Type": "multipart/form-data; charset=UTF-8",
+        }
+    }
+}
+
 export const get = (url: string, params?: Record<string, any>) => commonReq(pureConfig(url, 'get', params))
 
 export const del = (url: string, params?: Record<string, any>) => commonReq(pureConfig(url, 'delete', params))
@@ -112,3 +123,5 @@ export const put = (url: string, params?: Record<string, any>) => commonReq(json
 export const postForm = (url: string, params?: Record<string, any>) => commonReq(formConfig(url, 'post', params))
 
 export const putForm = (url: string, params?: Record<string, any>) => commonReq(formConfig(url, 'put', params))
+
+export const postFile = (url: string, params?: Record<string, any>) => commonReq(fileConfig(url, 'post', params))
