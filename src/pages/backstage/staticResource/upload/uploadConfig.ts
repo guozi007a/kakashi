@@ -11,7 +11,7 @@ export const supportData: string[] = [
     '支持图片格式转换',
     '支持给图片添加水印',
     '支持无限数量的文件上传',
-    '支持大文件上传',
+    '支持大文件分片上传',
     '支持上传进度实时显示',
     '支持断点续传',
     '支持所有常用文件类型',
@@ -19,12 +19,3 @@ export const supportData: string[] = [
 
 /** 文件断点续传的断点大小 */
 export const POINT = 1024 * 100 // 设置为100kb
-
-/** 上传文件的类型 */
-// export interface FileType {
-//     uid: string
-//     name: string
-//     size: number
-//     lastModified: number
-//     type: string
-// }

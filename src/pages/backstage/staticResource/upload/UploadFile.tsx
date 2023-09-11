@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { UploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
-import { Button, Upload, Layout, Switch, Space, message } from 'antd';
+import { Button, Upload, Layout, Switch, Space, message, Progress } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { uploadDirect } from '~/apis/backstage/source';
 import { POINT } from './uploadConfig';
@@ -46,28 +46,30 @@ const UploadFile = () => {
             : message.warning('已关闭上传目录功能')
     }
 
-    const handleUpload = async () => {
-        if (!fileList || fileList.length > 1) return
-        const file = fileList[0]
-        if (file.size as number <= POINT) {
-            const params = {
-                uid: file.uid,
+    const handleRemove = (file: UploadFile) => {
+        message.success(`${file.name}已移除！`)
+    }
+
+    const handleUpload = async (fileList: UploadFile[]): Promise<void> => {
+        if (!fileList || !fileList.length) return
+        for (const file of fileList) {
+            // 如果文件小于断点值，就直接上传，不做分片上传。
+            if (file.size as number <= POINT) {
+                const params = { uid: file.uid, }
+                const res = await uploadDirect(file, params)
+                message.success('上传完成！')
+                const { uid, path, progress } = res.data
+                // 使用函数式更新，确保每次可以即时更新为最新的上传进度
+                setFileList((preFileList: UploadFile[]) => preFileList.map((v, _) => {
+                    return v.uid === uid
+                        ? { ...v, url: path,  percent: progress, }
+                        : v
+                }))
+
+                // 当前请求完成后，过120ms再进行下一个请求。因为for...of会等待Promise执行完毕，再继续执行。
+                // 在这里插入Promise语句，该语句过120ms后才会执行，上面的请求成功后，先等待了120ms
+                await new Promise((resolve) => setTimeout(resolve, 120))
             }
-            const res = await uploadDirect(file, params)
-            console.log('data: ', res.data)
-            const { uid, path, progress } = res.data
-            const list = fileList.map((v, _) => {
-                return v.uid === uid
-                    ? {
-                        ...v,
-                        url: path,
-                        percent: progress,
-                        status: 'done',
-                    }
-                    : v
-            })
-            console.log('list: ', list)
-            setFileList(list as UploadFile[])
         }
     }
     
@@ -102,6 +104,17 @@ const UploadFile = () => {
             directory={checked}
             listType='picture'
             beforeUpload={handleBeforUpload}
+            // beforeUpload被return false阻止后，Upload组件自带进度条就无效了，此处自定义一个进度条显示进度
+            itemRender={(originNode: React.ReactElement, file: UploadFile) => {
+                return <>
+                    {originNode}
+                    <Progress
+                        // success表示已经完成的进度
+                        success={{ percent: file.percent ?? 0, strokeColor: '#52c41a' }}
+                    />
+                </>
+            }}
+            onRemove={handleRemove}
         >
             <Button icon={<UploadOutlined />}>选择文件</Button>
         </Upload>
@@ -121,7 +134,7 @@ const UploadFile = () => {
             >
                 {
                     fileList && fileList.length
-                        ? <Button type='primary' onClick={handleUpload}>开始上传</Button>
+                        ? <Button type='primary' onClick={() => {handleUpload(fileList)}}>开始上传</Button>
                         : null
                 }
             </Header>
