@@ -50,8 +50,24 @@ const UploadFile = () => {
         if (!fileList || fileList.length > 1) return
         const file = fileList[0]
         if (file.size as number <= POINT) {
-            const res = await uploadDirect(file)
+            const params = {
+                uid: file.uid,
+            }
+            const res = await uploadDirect(file, params)
             console.log('data: ', res.data)
+            const { uid, path, progress } = res.data
+            const list = fileList.map((v, _) => {
+                return v.uid === uid
+                    ? {
+                        ...v,
+                        url: path,
+                        percent: progress,
+                        status: 'done',
+                    }
+                    : v
+            })
+            console.log('list: ', list)
+            setFileList(list as UploadFile[])
         }
     }
     
