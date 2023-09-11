@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { UploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
-import { Button, Upload, Layout, Switch, Space, message, Progress } from 'antd';
+import { Button, Upload, Layout, Switch, Space, message, Progress, Tag } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { uploadDirect } from '~/apis/backstage/source';
 import { POINT } from './uploadConfig';
@@ -116,7 +116,11 @@ const UploadFile = () => {
             }}
             onRemove={handleRemove}
         >
-            <Button icon={<UploadOutlined />}>选择文件</Button>
+            <Space>
+                <Button icon={<UploadOutlined />}>选择文件</Button>
+                <Tag color="#2db7f5">已选择：{fileList.length}个</Tag>
+                <Tag color="#87d068">已完成：{fileList.filter(v => v.percent == 100).length}个</Tag>
+            </Space>
         </Upload>
         <Layout
             style={{
