@@ -52,6 +52,11 @@ const UploadFile = () => {
 
     const handleUpload = async (fileList: UploadFile[]): Promise<void> => {
         if (!fileList || !fileList.length) return
+        fileList = fileList.filter(v => v.percent != 100)
+        if (!fileList.length) {
+            message.warning('选择的文件都已完成上传！')
+            return
+        }
         for (const file of fileList) {
             // 如果文件小于断点值，就直接上传，不做分片上传。
             if (file.size as number <= POINT) {
