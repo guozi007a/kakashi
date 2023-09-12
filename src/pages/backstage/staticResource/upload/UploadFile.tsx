@@ -5,7 +5,7 @@ import type { UploadProps } from 'antd';
 import { Button, Upload, Layout, Switch, Space, message, Progress, Tag } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { uploadDirect } from '~/apis/backstage/source';
-import { POINT } from './uploadConfig';
+import { POINT_100KB, POINT_1M, CHUNKSIZE_100KB, CHUNKSIZE_500KB } from './uploadConfig';
 
 const { Header } = Layout
 
@@ -50,6 +50,11 @@ const UploadFile = () => {
         message.success(`${file.name}已移除！`)
     }
 
+    const handleRemoveAllDone = () => {
+        const list = fileList.filter(v => v.percent != 100)
+        setFileList(list)
+    }
+
     const handleUpload = async (fileList: UploadFile[]): Promise<void> => {
         if (!fileList || !fileList.length) return
         fileList = fileList.filter(v => v.percent != 100)
@@ -59,7 +64,7 @@ const UploadFile = () => {
         }
         for (const file of fileList) {
             // 如果文件小于断点值，就直接上传，不做分片上传。
-            if (file.size as number <= POINT) {
+            if (file.size as number <= POINT_100KB) {
                 const params = { uid: file.uid, }
                 const res = await uploadDirect(file, params)
                 message.success('上传完成！')
@@ -125,6 +130,11 @@ const UploadFile = () => {
                 <Button icon={<UploadOutlined />}>选择文件</Button>
                 <Tag color="#2db7f5">已选择：{fileList.length}个</Tag>
                 <Tag color="#87d068">已完成：{fileList.filter(v => v.percent == 100).length}个</Tag>
+                {
+                    fileList.some(v => v.percent == 100)
+                        ? <Button type='primary' onClick={handleRemoveAllDone}>一键移除已上传</Button>
+                        : null
+                }
             </Space>
         </Upload>
         <Layout

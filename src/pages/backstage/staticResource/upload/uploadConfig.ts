@@ -17,5 +17,14 @@ export const supportData: string[] = [
     '支持所有常用文件类型',
 ]
 
-/** 文件断点续传的断点大小 */
-export const POINT = 1024 * 100 // 设置为100kb
+/** 
+ * 文件断点续传的断点大小
+ * 小于100kb的文件，不需要切片，直接上传
+ * 文件大小在100kb-1m之间的，切片处理，切片大小为100kb
+ * 文件大小在1m以上的，切片上传，切片大小为500kb
+ */
+export const POINT_100KB = 1024 * 100 // 设置为100kb 
+export const POINT_1M = 1024 * 1024 // 1M
+export const CHUNKSIZE_100KB = 1024 * 100
+export const CHUNKSIZE_500KB = 1024 * 500
+ 
