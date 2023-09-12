@@ -14,3 +14,15 @@ export const uploadDirect = (file: UploadFile, params?: Record<string, any>) => 
     }
     return postFile('/v1/uploadDirect', formData)
 }
+
+// 文件预传
+export const preUploadFile = (file: UploadFile, params?: Record<string, any>) => {
+    const formData = new FormData()
+    formData.append('file', file.originFileObj!)
+    if (params) {
+        for (const [k, v] of Object.entries(params)) {
+            formData.append(k, v)
+        }
+    }
+    return postFile('/v1/preUpload', formData)
+}

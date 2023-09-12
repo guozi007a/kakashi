@@ -4,7 +4,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import { Button, Upload, Layout, Switch, Space, message, Progress, Tag } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
-import { uploadDirect } from '~/apis/backstage/source';
+import { uploadDirect, preUploadFile } from '~/apis/backstage/source';
 import { POINT_100KB, POINT_1M, CHUNKSIZE_100KB, CHUNKSIZE_500KB } from './uploadConfig';
 
 const { Header } = Layout
@@ -55,6 +55,29 @@ const UploadFile = () => {
         setFileList(list)
     }
 
+    // 预传
+    const handlePreUpload = async (file: UploadFile) => {
+        if (file.percent == 100) return
+        const params = { uid: file.uid, type: file.type }
+        const res = await preUploadFile(file, params)
+        console.log(res.data)
+    }
+
+    // 分片上传
+    const handleChunkUpload = async (file: UploadFile) => {
+        let CHUNK_SIZE: number
+        const size = file.size!
+        if (size <= POINT_1M) {
+            CHUNK_SIZE = CHUNKSIZE_100KB
+        } else {
+            CHUNK_SIZE = CHUNKSIZE_500KB
+        }
+        const TOTAL = Math.ceil(size / CHUNK_SIZE)
+        let currentChunk = 1
+        
+    }
+
+    // 上传列表中的文件
     const handleUpload = async (fileList: UploadFile[]): Promise<void> => {
         if (!fileList || !fileList.length) return
         fileList = fileList.filter(v => v.percent != 100)
@@ -79,6 +102,8 @@ const UploadFile = () => {
                 // 当前请求完成后，过120ms再进行下一个请求。因为for...of会等待Promise执行完毕，再继续执行。
                 // 在这里插入Promise语句，该语句过120ms后才会执行，上面的请求成功后，先等待了120ms
                 await new Promise((resolve) => setTimeout(resolve, 120))
+            } else {
+                handlePreUpload(file)
             }
         }
     }
