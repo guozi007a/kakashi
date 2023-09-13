@@ -19,3 +19,12 @@ go mod tidy
 
 go run ./main.go
 ```
+
+docker部署
+```docker
+docker compose down
+
+docker compose build
+
+docker compose -d up
+```
