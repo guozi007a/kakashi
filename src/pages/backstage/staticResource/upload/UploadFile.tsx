@@ -4,7 +4,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import { Button, Upload, Layout, Switch, Space, message, Progress, Tag } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
-import { uploadDirect, preUploadFile, uploadChunk } from '~/apis/backstage/source';
+import { uploadDirectAPI, preUploadFileAPI, uploadChunkAPI, mergeChunksAPI } from '~/apis/backstage/source';
 import { POINT_100KB, POINT_1M, CHUNKSIZE_100KB, CHUNKSIZE_500KB } from './uploadConfig';
 
 const { Header } = Layout
@@ -58,8 +58,11 @@ const UploadFile = () => {
     // 预传
     const handlePreUpload = async (file: UploadFile) => {
         if (file.percent == 100) return
-        const params = { uid: file.uid, type: file.type }
-        await preUploadFile(file, params)
+        const formData = new FormData()
+        formData.append("file", file.originFileObj!)
+        formData.append("uid", file.uid)
+        formData.append("type", file.type!)
+        await preUploadFileAPI(formData)
         await new Promise((resolve) => setTimeout(resolve, 60))
         handleChunkUpload(file)
     }
@@ -88,7 +91,7 @@ const UploadFile = () => {
             }
             formData.append("chunk", chunkData)
             formData.append("currentChunk", currentChunk + "")
-            const res = await uploadChunk(formData)
+            const res = await uploadChunkAPI(formData)
             setFileList(preFileList => preFileList.map(v => {
                 return v.uid == res.data.uid
                     ? {
@@ -97,9 +100,26 @@ const UploadFile = () => {
                     }
                     : v
             }))
+            await new Promise((resolve) => setTimeout(resolve, 60))
+
+            // 全部切片上传完成后，开始合并切片
+            if (currentChunk == TOTAL) {
+                message.success('上传完成，开始合并')
+                const res = await mergeChunksAPI()
+                setFileList(preFileList => preFileList.map(v => {
+                    return v.uid == res.data.uid
+                        ? {
+                            ...v,
+                            percent: 100,
+                            url: res.data.path,
+                        }
+                        : v
+                }))
+                message.success('完成合并，上传成功')
+                return
+            }
 
             currentChunk++
-            await new Promise((resolve) => setTimeout(resolve, 60))
         }
     }
 
@@ -114,8 +134,12 @@ const UploadFile = () => {
         for (const file of fileList) {
             // 如果文件小于断点值，就直接上传，不做分片上传。
             if (file.size as number <= POINT_100KB) {
-                const params = { uid: file.uid, }
-                const res = await uploadDirect(file, params)
+                // 创建直传参数
+                const formData = new FormData()
+                formData.append("file", file.originFileObj!)
+                formData.append("uid", file.uid)
+                // 开始直传
+                const res = await uploadDirectAPI(formData)
                 message.success('上传完成！')
                 const { uid, path, progress } = res.data
                 // 使用函数式更新，确保每次可以即时更新为最新的上传进度
