@@ -181,28 +181,30 @@ const UploadFile = () => {
                 </Space>
             </Header>
         </Layout>
-        <Upload
-            name='upfile'
-            multiple
-            onChange={handleFilesChange}
-            fileList={fileList}
-            directory={checked}
-            listType='picture'
-            beforeUpload={handleBeforUpload}
-            // beforeUpload被return false阻止后，Upload组件自带进度条就无效了，此处自定义一个进度条显示进度
-            itemRender={(originNode: React.ReactElement, file: UploadFile) => {
-                return <>
-                    {originNode}
-                    <Progress
-                        // success表示已经完成的进度
-                        success={{ percent: file.percent ?? 0, strokeColor: '#52c41a' }}
-                    />
-                </>
-            }}
-            onRemove={handleRemove}
-        >
-            <Space>
+        <Space>
+            <Upload
+                name='upfile'
+                multiple
+                onChange={handleFilesChange}
+                fileList={fileList}
+                directory={checked}
+                listType='picture'
+                beforeUpload={handleBeforUpload}
+                // beforeUpload被return false阻止后，Upload组件自带进度条就无效了，此处自定义一个进度条显示进度
+                itemRender={(originNode: React.ReactElement, file: UploadFile) => {
+                    return <>
+                        {originNode}
+                        <Progress
+                            // success表示已经完成的进度
+                            success={{ percent: file.percent ?? 0, strokeColor: '#52c41a' }}
+                        />
+                    </>
+                }}
+                onRemove={handleRemove}
+            >
                 <Button icon={<UploadOutlined />}>选择文件</Button>
+            </Upload>
+            <Space>
                 <Tag color="#2db7f5">已选择：{fileList.length}个</Tag>
                 <Tag color="#87d068">已完成：{fileList.filter(v => v.percent == 100).length}个</Tag>
                 {
@@ -211,7 +213,7 @@ const UploadFile = () => {
                         : null
                 }
             </Space>
-        </Upload>
+        </Space>
         <Layout
             style={{
                 backgroundColor: '#fff',
