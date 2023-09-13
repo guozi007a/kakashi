@@ -8,7 +8,7 @@ const instance = axios.create({
 })
 
 let RequstTime = 0 // 上次发起请求的时间戳
-let SpaceTime = 80 // 两次请求之间的最小间隔时间，单位ms
+let SpaceTime = 50 // 两次请求之间的最小间隔时间，单位ms
 
 // 添加请求拦截器
 instance.interceptors.request.use(function (config) {

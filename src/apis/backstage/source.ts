@@ -26,3 +26,6 @@ export const preUploadFile = (file: UploadFile, params?: Record<string, any>) =>
     }
     return postFile('/v1/preUpload', formData)
 }
+
+// 上传切片
+export const uploadChunk = (formData: FormData) => postFile('/v1/chunkUpload', formData)

@@ -4,7 +4,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import { Button, Upload, Layout, Switch, Space, message, Progress, Tag } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
-import { uploadDirect, preUploadFile } from '~/apis/backstage/source';
+import { uploadDirect, preUploadFile, uploadChunk } from '~/apis/backstage/source';
 import { POINT_100KB, POINT_1M, CHUNKSIZE_100KB, CHUNKSIZE_500KB } from './uploadConfig';
 
 const { Header } = Layout
@@ -59,22 +59,48 @@ const UploadFile = () => {
     const handlePreUpload = async (file: UploadFile) => {
         if (file.percent == 100) return
         const params = { uid: file.uid, type: file.type }
-        const res = await preUploadFile(file, params)
-        console.log(res.data)
+        await preUploadFile(file, params)
+        await new Promise((resolve) => setTimeout(resolve, 60))
+        handleChunkUpload(file)
     }
 
     // 分片上传
     const handleChunkUpload = async (file: UploadFile) => {
         let CHUNK_SIZE: number
         const size = file.size!
+        const newFile = file.originFileObj!
         if (size <= POINT_1M) {
             CHUNK_SIZE = CHUNKSIZE_100KB
         } else {
             CHUNK_SIZE = CHUNKSIZE_500KB
         }
         const TOTAL = Math.ceil(size / CHUNK_SIZE)
-        let currentChunk = 1
-        
+        let currentChunk = 1 // 切片序号
+        while (currentChunk <= TOTAL) {
+            const formData = new FormData()
+            let chunkData
+            // 如果是最后一个切片，就按照切片的实际大小传递给后端。因为最后一个切片的实际大小通常会小于CHUNK_SIZE
+            // 这样传递的数据更精确，也更节省资源
+            if (currentChunk == TOTAL) {
+                chunkData = newFile.slice(CHUNK_SIZE * (TOTAL - 1))
+            } else {
+                chunkData = newFile.slice(CHUNK_SIZE * (currentChunk - 1), CHUNK_SIZE * currentChunk)
+            }
+            formData.append("chunk", chunkData)
+            formData.append("currentChunk", currentChunk + "")
+            const res = await uploadChunk(formData)
+            setFileList(preFileList => preFileList.map(v => {
+                return v.uid == res.data.uid
+                    ? {
+                        ...v,
+                        percent: Math.floor(res.data.sort / TOTAL)
+                    }
+                    : v
+            }))
+
+            currentChunk++
+            await new Promise((resolve) => setTimeout(resolve, 60))
+        }
     }
 
     // 上传列表中的文件
