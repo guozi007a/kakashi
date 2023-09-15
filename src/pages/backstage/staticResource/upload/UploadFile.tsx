@@ -24,9 +24,6 @@ const UploadFile = () => {
     const handleFilesChange: UploadProps['onChange'] = (info) => {
         let newFileList = [...info.fileList];
 
-        console.log('info: ', info)
-    
-    
         // 2. Read from response and show file link
         newFileList = newFileList.map((file) => {
           if (file.response) {
@@ -138,6 +135,7 @@ const UploadFile = () => {
                 const formData = new FormData()
                 formData.append("file", file.originFileObj!)
                 formData.append("uid", file.uid)
+                formData.append("type", file.type!)
                 // 开始直传
                 const res = await uploadDirectAPI(formData)
                 message.success('上传完成！')
@@ -181,39 +179,45 @@ const UploadFile = () => {
                 </Space>
             </Header>
         </Layout>
-        <Space>
-            <Upload
-                name='upfile'
-                multiple
-                onChange={handleFilesChange}
-                fileList={fileList}
-                directory={checked}
-                listType='picture'
-                beforeUpload={handleBeforUpload}
-                // beforeUpload被return false阻止后，Upload组件自带进度条就无效了，此处自定义一个进度条显示进度
-                itemRender={(originNode: React.ReactElement, file: UploadFile) => {
-                    return <>
-                        {originNode}
-                        <Progress
-                            // success表示已经完成的进度
-                            success={{ percent: file.percent ?? 0, strokeColor: '#52c41a' }}
-                        />
-                    </>
-                }}
-                onRemove={handleRemove}
-            >
-                <Button icon={<UploadOutlined />}>选择文件</Button>
-            </Upload>
+        <Upload
+            name='upfile'
+            multiple
+            onChange={handleFilesChange}
+            fileList={fileList}
+            directory={checked}
+            listType='picture'
+            beforeUpload={handleBeforUpload}
+            // beforeUpload被return false阻止后，Upload组件自带进度条就无效了，此处自定义一个进度条显示进度
+            itemRender={(originNode: React.ReactElement, file: UploadFile) => {
+                return <>
+                    {originNode}
+                    <Progress
+                        // success表示已经完成的进度
+                        success={{ percent: file.percent ?? 0, strokeColor: '#52c41a' }}
+                    />
+                </>
+            }}
+            onRemove={handleRemove}
+        >
             <Space>
-                <Tag color="#2db7f5">已选择：{fileList.length}个</Tag>
-                <Tag color="#87d068">已完成：{fileList.filter(v => v.percent == 100).length}个</Tag>
-                {
-                    fileList.some(v => v.percent == 100)
-                        ? <Button type='primary' onClick={handleRemoveAllDone}>一键移除已上传</Button>
-                        : null
-                }
+                <Button icon={<UploadOutlined />}>选择文件</Button>
+                <Space
+                    onClick={(e) => {
+                        // 解决点击标签也会触发打开上传弹框的bug
+                        e.preventDefault()
+                        e.stopPropagation()
+                    }}
+                >
+                    <Tag color="#2db7f5">已选择：{fileList.length}个</Tag>
+                    <Tag color="#87d068">已完成：{fileList.filter(v => v.percent == 100).length}个</Tag>
+                    {
+                        fileList.some(v => v.percent == 100)
+                            ? <Button type='primary' onClick={handleRemoveAllDone}>一键移除已上传</Button>
+                            : null
+                    }
+                </Space>
             </Space>
-        </Space>
+        </Upload>
         <Layout
             style={{
                 backgroundColor: '#fff',
