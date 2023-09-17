@@ -4,6 +4,8 @@ import { Layout, Space, Select, Switch, List, Tag, Image, Button } from "antd";
 import { InfoCircleOutlined, FieldTimeOutlined, DeleteOutlined } from '@ant-design/icons';
 import { queryFileList } from '~/apis/backstage/source';
 import type { FileList } from '~/apis/backstage/source';
+import { transferFileSize } from '~/utils/transferFileSize';
+import dayjs from 'dayjs';
 
 type OptionType = 'date' | 'size'
 
@@ -118,8 +120,8 @@ const FileList = ({ category }: PropsType) => {
                         <List.Item
                             key={item.uid}
                             actions={[
-                                <IconText icon={InfoCircleOutlined} text={`${item.size}`} key="list-vertical-like-o" />,
-                                <IconText icon={FieldTimeOutlined} text={`${item.date}`} key="list-vertical-message" />,
+                                <IconText icon={InfoCircleOutlined} text={`${transferFileSize(item.size)}`} key="list-vertical-like-o" />,
+                                <IconText icon={FieldTimeOutlined} text={`${dayjs(item.date).format('YYYY-MM-DD HH:mm:ss')}`} key="list-vertical-message" />,
                                 <Button>
                                     <IconText icon={DeleteOutlined} text='删除' key="delete-file" />
                                 </Button>
