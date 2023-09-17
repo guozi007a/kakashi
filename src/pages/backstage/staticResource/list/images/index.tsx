@@ -1,8 +1,9 @@
 /** 管理后台-静态资源管理-资源列表-图片资源 */
+import FileList from "../FileList"
 
 const ResourceImages = () => {
     return <>
-        图片资源
+        <FileList category="image" />
     </>
 }
 

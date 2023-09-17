@@ -1,8 +1,9 @@
 /** 管理后台-静态资源管理-资源列表-其他资源 */
+import FileList from "../FileList"
 
 const ResourceOther = () => {
     return <>
-        其他资源
+        <FileList category="other" />
     </>
 }
 

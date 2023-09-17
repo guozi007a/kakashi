@@ -11,3 +11,13 @@ export const uploadChunkAPI = (formData: FormData) => postFile('/v1/chunkUpload'
 
 // 合并切片
 export const mergeChunksAPI = () => get('/v1/mergeChunks')
+
+// 获取文件列表
+export interface FileList {
+    category: string
+    option: string
+    sortType: boolean
+    pageSize: number
+    start: number
+}
+export const queryFileList = (params: FileList) => get('/v1/selectFileList', params)

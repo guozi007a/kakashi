@@ -1,11 +1,8 @@
 /** 管理后台首页 */
 import styles from './index.module.scss'
 import { useState, useEffect } from "react"
-import {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-} from '@ant-design/icons'
-import { Layout, Menu, Button, theme, Breadcrumb } from 'antd'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
+import { Layout, Menu, Button, theme, Breadcrumb, ConfigProvider } from 'antd'
 import type { MenuProps } from 'antd';
 import { Outlet, useNavigate } from "react-router-dom";
 import logoImg from '~/assets/images/logo/logo.png'
@@ -16,6 +13,7 @@ import { transferSelectedPath } from '~/utils/transferSelectedPath';
 import { pathname2OpenPath } from '~/utils/pathname2OpenPath';
 import { selectKey2Position } from '~/utils/selectKey2Position';
 import Scrollbars from 'react-custom-scrollbars-2'
+import zhCN from 'antd/locale/zh_CN';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -65,7 +63,7 @@ const Home: React.FC = () => {
     }, [location.pathname])
 
     return (
-        <>
+        <ConfigProvider locale={zhCN}>
             <Layout
                 style={{
                     height: '100%',
@@ -140,7 +138,7 @@ const Home: React.FC = () => {
                     </div>
                 </Layout>
             </Layout>
-        </>
+        </ConfigProvider>
     )
 }
 
