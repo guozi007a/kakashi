@@ -17,7 +17,7 @@ npm run dev
 ```go
 go mod tidy
 
-go run ./main.go
+go run main.go
 ```
 
 docker部署
