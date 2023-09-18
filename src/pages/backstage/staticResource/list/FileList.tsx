@@ -1,7 +1,7 @@
 /** 文件列表组件 */
 import React, { useState, useEffect } from 'react'
-import { Layout, Space, Select, Switch, List, Tag, Image, Button, message } from "antd";
-import { InfoCircleOutlined, FieldTimeOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Layout, Space, Select, Switch, List, Tag, Image, Button, message, Input } from "antd";
+import { InfoCircleOutlined, FieldTimeOutlined, DeleteOutlined, EditOutlined, CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { queryFileListAPI, solfDeleteFileAPI } from '~/apis/backstage/source';
 import type { FileList } from '~/apis/backstage/source';
 import { transferFileSize } from '~/utils/transferFileSize';
@@ -43,6 +43,7 @@ const FileList = ({ category }: PropsType) => {
     const [count, setCount] = useState<number>(0)
     const [list, setList] = useState<FileInfo[]>([])
     const [currentPage, setCurrentPage] = useState<number>(1)
+    const [isEditing, setIsEditing] = useState(false)
 
     const handleOptionChange = (value: OptionType) => {
         setOption(value)
@@ -62,6 +63,10 @@ const FileList = ({ category }: PropsType) => {
         const files = list.filter(v => v.uid != uid)
         setList(files)
         setCount(count - 1)
+    }
+
+    const handleCancelEdit = () => {
+        setIsEditing(false)
     }
 
     useEffect(() => { 
@@ -142,9 +147,28 @@ const FileList = ({ category }: PropsType) => {
                                 </Button>,
                                 <Button
                                     size='small'
+                                    disabled={isEditing}
+                                    onClick={() => {
+                                        !isEditing && setIsEditing(true)
+                                    }}
                                 >
                                     <IconText icon={EditOutlined} text='编辑' key="edit-file" />
                                 </Button>,
+                                isEditing
+                                    ? <Button
+                                        size='small'
+                                    >
+                                        <IconText icon={CheckCircleOutlined} text='编辑完成' key="edit-file-finish" />
+                                    </Button>
+                                    : null,
+                                isEditing
+                                    ? <Button
+                                        size='small'
+                                        onClick={handleCancelEdit}
+                                    >
+                                        <IconText icon={CloseCircleOutlined} text='取消编辑' key="edit-file-cancel" />
+                                    </Button>
+                                    : null,
                             ]}
                             style={{
                                 backgroundColor: 'rgba(245, 245, 245, .72)',
@@ -165,13 +189,24 @@ const FileList = ({ category }: PropsType) => {
                         >
                             <List.Item.Meta
                                 title={<>
-                                    <Space>
-                                        <a href={`${import.meta.env.ENV_PREFIX}/static/${category}/${item.name}`} target='_blank'>{item.name}</a>
-                                    </Space>
+                                    {
+                                        isEditing
+                                            ? <Input
+                                                value={item.name}
+                                                autoFocus
+                                            />
+                                            : <a href={`${import.meta.env.ENV_PREFIX}/static/${category}/${item.name}`} target='_blank'>{item.name}</a>
+                                    }
                                 </>}
                                 description={<>
                                     <Space>
-                                        <span>{item.describe || '暂无描述'}</span>
+                                        {
+                                            isEditing
+                                                ? <Input
+                                                    value={item.describe || '暂无描述'}
+                                                />
+                                                : <span>{item.describe || '暂无描述'}</span>
+                                        }
                                     </Space>
                                 </>}
                             />
