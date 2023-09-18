@@ -1,7 +1,7 @@
 /** 文件列表组件 */
 import React, { useState, useEffect } from 'react'
 import { Layout, Space, Select, Switch, List, Tag, Image, Button, message } from "antd";
-import { InfoCircleOutlined, FieldTimeOutlined, DeleteOutlined } from '@ant-design/icons';
+import { InfoCircleOutlined, FieldTimeOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { queryFileListAPI, solfDeleteFileAPI } from '~/apis/backstage/source';
 import type { FileList } from '~/apis/backstage/source';
 import { transferFileSize } from '~/utils/transferFileSize';
@@ -135,10 +135,16 @@ const FileList = ({ category }: PropsType) => {
                                 <IconText icon={InfoCircleOutlined} text={`${transferFileSize(item.size)}`} key="list-vertical-like-o" />,
                                 <IconText icon={FieldTimeOutlined} text={`${dayjs(item.date).format('YYYY-MM-DD HH:mm:ss')}`} key="list-vertical-message" />,
                                 <Button
+                                    size='small'
                                     onClick={() => {handleSolfDelete(item.uid)}}
                                 >
                                     <IconText icon={DeleteOutlined} text='删除' key="delete-file" />
-                                </Button>
+                                </Button>,
+                                <Button
+                                    size='small'
+                                >
+                                    <IconText icon={EditOutlined} text='编辑' key="edit-file" />
+                                </Button>,
                             ]}
                             style={{
                                 backgroundColor: 'rgba(245, 245, 245, .72)',
@@ -158,8 +164,16 @@ const FileList = ({ category }: PropsType) => {
                             }
                         >
                             <List.Item.Meta
-                                title={<a href={`${import.meta.env.ENV_PREFIX}/static/${category}/${item.name}`} target='_blank'>{item.name}</a>}
-                                description={item.describe || '暂无描述'}
+                                title={<>
+                                    <Space>
+                                        <a href={`${import.meta.env.ENV_PREFIX}/static/${category}/${item.name}`} target='_blank'>{item.name}</a>
+                                    </Space>
+                                </>}
+                                description={<>
+                                    <Space>
+                                        <span>{item.describe || '暂无描述'}</span>
+                                    </Space>
+                                </>}
                             />
                         </List.Item>
                     )}
