@@ -1,8 +1,8 @@
 /** 文件列表组件 */
 import React, { useState, useEffect } from 'react'
-import { Layout, Space, Select, Switch, List, Tag, Image, Button } from "antd";
+import { Layout, Space, Select, Switch, List, Tag, Image, Button, message } from "antd";
 import { InfoCircleOutlined, FieldTimeOutlined, DeleteOutlined } from '@ant-design/icons';
-import { queryFileListAPI } from '~/apis/backstage/source';
+import { queryFileListAPI, solfDeleteFileAPI } from '~/apis/backstage/source';
 import type { FileList } from '~/apis/backstage/source';
 import { transferFileSize } from '~/utils/transferFileSize';
 import dayjs from 'dayjs';
@@ -21,6 +21,7 @@ interface FileInfo {
     category: string
     size: number
     describe: string
+    temp: boolean
 }
 
 const { Header, Content } = Layout
@@ -53,7 +54,14 @@ const FileList = ({ category }: PropsType) => {
 
     const handlePage = (page: number) => {
         setCurrentPage(page)
-        console.log('page: ', page)
+    }
+
+    const handleSolfDelete = async (uid: string) => {
+        await solfDeleteFileAPI(uid)
+        message.success('已移至回收站')
+        const files = list.filter(v => v.uid != uid)
+        setList(files)
+        setCount(count - 1)
     }
 
     useEffect(() => { 
@@ -126,7 +134,9 @@ const FileList = ({ category }: PropsType) => {
                             actions={[
                                 <IconText icon={InfoCircleOutlined} text={`${transferFileSize(item.size)}`} key="list-vertical-like-o" />,
                                 <IconText icon={FieldTimeOutlined} text={`${dayjs(item.date).format('YYYY-MM-DD HH:mm:ss')}`} key="list-vertical-message" />,
-                                <Button>
+                                <Button
+                                    onClick={() => {handleSolfDelete(item.uid)}}
+                                >
                                     <IconText icon={DeleteOutlined} text='删除' key="delete-file" />
                                 </Button>
                             ]}
