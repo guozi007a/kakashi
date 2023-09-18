@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { Layout, Space, Select, Switch, List, Tag, Image, Button } from "antd";
 import { InfoCircleOutlined, FieldTimeOutlined, DeleteOutlined } from '@ant-design/icons';
-import { queryFileList } from '~/apis/backstage/source';
+import { queryFileListAPI } from '~/apis/backstage/source';
 import type { FileList } from '~/apis/backstage/source';
 import { transferFileSize } from '~/utils/transferFileSize';
 import dayjs from 'dayjs';
@@ -58,7 +58,7 @@ const FileList = ({ category }: PropsType) => {
 
     useEffect(() => { 
         const getFileList = async (params: FileList) => {
-            const res = await queryFileList(params)
+            const res = await queryFileListAPI(params)
             setCount(res.data.count ?? 0)
             setList(res.data.fileList ?? [])
         }
