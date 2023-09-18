@@ -1,4 +1,4 @@
-import { get, postFile, putForm, del } from "../request";
+import { get, postFile, putForm, put } from "../request";
 
 // 直接上传
 export const uploadDirectAPI = (formData: FormData) => postFile('/v1/uploadDirect', formData)
@@ -29,7 +29,16 @@ export const solfDeleteFileAPI = (uid: string) => putForm('/v1/setFileTemp', { u
 export const queryTempFilesAPI = () => get('/v1/queryTempFileList')
 
 // 还原临时文件
-export const restitutionTempFilesAPI = (uids: string[]) => putForm('/v1/restitutionFiles', { uids })
+export const restitutionTempFilesAPI = (uids: string[]) => put('/v1/restitutionFiles', { uids })
 
 // 彻底删除临时文件
-export const deleteThoroughTempFilesAPI = (uids: string[]) => del('/v1/deleteThorough', { uids })
+export interface TempType {
+    uid: string
+    name: string
+    describe: string
+    size: number
+    date: number
+    category: string
+    temp?: boolean
+}
+export const deleteThoroughTempFilesAPI = (temps: TempType[]) => put('/v1/deleteThorough', { temps })
