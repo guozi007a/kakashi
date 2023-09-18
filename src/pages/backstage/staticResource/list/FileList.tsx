@@ -101,7 +101,11 @@ const FileList = ({ category }: PropsType) => {
                     <Tag color="#87d068">共{count}条</Tag>
                 </Space>
             </Header>
-            <Content>
+            <Content
+                style={{
+                    backgroundColor: '#fff',
+                }}
+            >
                 <List
                     itemLayout="vertical"
                     size="large"
@@ -127,7 +131,7 @@ const FileList = ({ category }: PropsType) => {
                                 </Button>
                             ]}
                             style={{
-                                backgroundColor: 'var(--gray-3)',
+                                backgroundColor: 'rgba(245, 245, 245, .72)',
                                 marginBottom: '10px',
                                 borderRadius: '6px',
                             }}

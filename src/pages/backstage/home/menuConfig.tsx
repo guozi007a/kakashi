@@ -57,7 +57,7 @@ export const items: MenuItemConfig[] = [
                 key: 'static-resource_temp-keep',
                 real: 'temp-keep',
                 icon: <UserOutlined />,
-                label: '临时资源',
+                label: '资源回收站',
             },
             {
                 key: 'static-resource_config',
