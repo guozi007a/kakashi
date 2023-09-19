@@ -114,21 +114,21 @@ const ResourceTemp = () => {
 
         await deleteThoroughTempFilesAPI(temps)
 
-        // setCount(count - temps.length)
+        setCount(count - temps.length)
 
-        // const list: DataType[] = []
+        const list: DataType[] = []
 
-        // for (const item of tempFiles) {
-        //     if (!temps.some(v => v.uid == item.uid)) {
-        //         list.push(item)
-        //     }
-        // }
-        // setTempFiles(list)
+        for (const item of tempFiles) {
+            if (!temps.some(v => v.uid == item.uid)) {
+                list.push(item)
+            }
+        }
+        setTempFiles(list)
 
-        // message.success('清除成功!')
+        message.success('清除成功!')
 
         // 要重置一次，不然会报错
-        // reSelect()
+        reSelect()
     }
 
     useEffect(() => { 
@@ -164,7 +164,7 @@ const ResourceTemp = () => {
             columns={columns}
             dataSource={tempFiles}
             pagination={false}
-            // virtual最新版新增，有bug
+            // virtual // antd@5.91新增，有bug
             // virtual
             // scroll={{
             //     x: '100%',

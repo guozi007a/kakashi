@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { Layout, Space, Select, Switch, List, Tag, Image, Button, message, Input } from "antd";
 import { InfoCircleOutlined, FieldTimeOutlined, DeleteOutlined, EditOutlined, CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import { queryFileListAPI, solfDeleteFileAPI } from '~/apis/backstage/source';
+import { queryFileListAPI, solfDeleteFileAPI, updateFileAPI } from '~/apis/backstage/source';
 import type { FileList } from '~/apis/backstage/source';
 import { transferFileSize } from '~/utils/transferFileSize';
 import dayjs from 'dayjs';
@@ -44,6 +44,9 @@ const FileList = ({ category }: PropsType) => {
     const [list, setList] = useState<FileInfo[]>([])
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [isEditing, setIsEditing] = useState(false)
+    const [initFile, setInitFile] = useState<FileInfo>({} as FileInfo)
+    const [nameVal, setNameVal] = useState('')
+    const [descVal, setDescVal] = useState('')
 
     const handleOptionChange = (value: OptionType) => {
         setOption(value)
@@ -65,8 +68,42 @@ const FileList = ({ category }: PropsType) => {
         setCount(count - 1)
     }
 
+    const handleStartEdit = (file: FileInfo) => {
+        setIsEditing(true)
+        setInitFile(file)
+        setNameVal(file.name.match(/.*(?=\.\w+$)/)![0])
+        setDescVal(file.describe ?? '')
+    }
+
     const handleCancelEdit = () => {
         setIsEditing(false)
+        setInitFile({} as FileInfo)
+        setNameVal(initFile.name)
+        setDescVal(initFile.describe || '暂无描述')
+    }
+
+    const handleFinishEdit = async () => {
+        if (!nameVal) {
+            message.warning('文件名不能为空')
+            return
+        }
+        const editFile: FileInfo = {
+            ...initFile,
+            name: nameVal +  initFile.name.match(/\.\w+$/)![0],
+            describe: descVal,
+        }
+
+        await updateFileAPI(editFile)
+        setIsEditing(false)
+        setInitFile({} as FileInfo)
+
+        setList(preList => preList.map(v => {
+            return v.uid == editFile.uid
+                ? editFile
+                : v
+        }))
+        
+        message.success('修改成功')
     }
 
     useEffect(() => { 
@@ -149,19 +186,20 @@ const FileList = ({ category }: PropsType) => {
                                     size='small'
                                     disabled={isEditing}
                                     onClick={() => {
-                                        !isEditing && setIsEditing(true)
+                                        !isEditing && handleStartEdit(item)
                                     }}
                                 >
                                     <IconText icon={EditOutlined} text='编辑' key="edit-file" />
                                 </Button>,
-                                isEditing
+                                isEditing && item.uid == initFile.uid
                                     ? <Button
                                         size='small'
+                                        onClick={handleFinishEdit}
                                     >
                                         <IconText icon={CheckCircleOutlined} text='编辑完成' key="edit-file-finish" />
                                     </Button>
                                     : null,
-                                isEditing
+                                isEditing && item.uid == initFile.uid
                                     ? <Button
                                         size='small'
                                         onClick={handleCancelEdit}
@@ -190,20 +228,45 @@ const FileList = ({ category }: PropsType) => {
                             <List.Item.Meta
                                 title={<>
                                     {
-                                        isEditing
-                                            ? <Input
-                                                value={item.name}
-                                                autoFocus
-                                            />
+                                        isEditing && item.uid == initFile.uid
+                                            ? <Space
+                                                style={{
+                                                    width: '100%',
+                                                }}
+                                                styles={{
+                                                    item: {
+                                                        minWidth: '50%',
+                                                    }
+                                                }}
+                                            >
+                                                <Input
+                                                    value={nameVal}
+                                                    autoFocus
+                                                    onChange={e => {
+                                                        setNameVal(e.target.value)
+                                                    }}
+                                                />
+                                                <Tag color='#55acee'>{item.name.match(/\.\w+$/)![0]}</Tag>
+                                            </Space>
                                             : <a href={`${import.meta.env.ENV_PREFIX}/static/${category}/${item.name}`} target='_blank'>{item.name}</a>
                                     }
                                 </>}
                                 description={<>
-                                    <Space>
+                                    <Space
+                                        style={{
+                                            width: '100%',
+                                        }}
+                                        styles={{
+                                            item: {
+                                                minWidth: '50%',
+                                            }
+                                        }}
+                                    >
                                         {
-                                            isEditing
+                                            isEditing && item.uid == initFile.uid
                                                 ? <Input
-                                                    value={item.describe || '暂无描述'}
+                                                    value={descVal}
+                                                    onChange={e => {setDescVal(e.target.value)}}
                                                 />
                                                 : <span>{item.describe || '暂无描述'}</span>
                                         }

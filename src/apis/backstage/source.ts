@@ -42,3 +42,16 @@ export interface TempType {
     temp?: boolean
 }
 export const deleteThoroughTempFilesAPI = (temps: TempType[]) => put('/v1/deleteThorough', { temps })
+
+// 修改文件信息
+export interface FileInfo {
+    id: number
+    uid: string
+    name: string
+    date: number
+    category: string
+    size: number
+    describe: string
+    temp: boolean
+}
+export const updateFileAPI = (file: FileInfo) => put('/v1/updateFileInfo', file)
