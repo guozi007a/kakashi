@@ -70,9 +70,9 @@ const ResourceTemp = () => {
     };
 
     const onSelectChange = (newSelectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+        // console.log('selectedRowKeys changed: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
-        console.log('selectedRows: ', selectedRows)
+        // console.log('selectedRows: ', selectedRows)
         setSelectedRows(selectedRows)
     };
 

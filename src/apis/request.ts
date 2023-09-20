@@ -7,16 +7,16 @@ const instance = axios.create({
     timeout: 20000,
 })
 
-let RequstTime = 0 // 上次发起请求的时间戳
-let SpaceTime = 50 // 两次请求之间的最小间隔时间，单位ms
+// let RequstTime = 0 // 上次发起请求的时间戳
+// let SpaceTime = 50 // 两次请求之间的最小间隔时间，单位ms
 
 // 添加请求拦截器
 instance.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
-    if (Date.now() - RequstTime <= SpaceTime) {
-        return Promise.reject('操作过快，请稍后重试');
-    }
-    RequstTime = Date.now()
+    // if (Date.now() - RequstTime <= SpaceTime) {
+    //     return Promise.reject('操作过快，请稍后重试');
+    // }
+    // RequstTime = Date.now()
     return config;
   }, function (error) {
     // 对请求错误做些什么

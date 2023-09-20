@@ -26,5 +26,5 @@ export const supportData: string[] = [
 export const POINT_100KB = 1024 * 100 // 设置为100kb 
 export const POINT_1M = 1024 * 1024 // 1M
 export const CHUNKSIZE_100KB = 1024 * 100
-export const CHUNKSIZE_500KB = 1024 * 500
+export const CHUNKSIZE_1MB = 1024 * 1024
  

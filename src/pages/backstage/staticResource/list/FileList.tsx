@@ -127,6 +127,7 @@ const FileList = ({ category }: PropsType) => {
             <Header
                 style={{
                     backgroundColor: '#fff',
+                    paddingLeft: '24px',
                 }}
             >
                 <Space

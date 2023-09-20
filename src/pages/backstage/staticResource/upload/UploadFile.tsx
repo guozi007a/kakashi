@@ -5,7 +5,7 @@ import type { UploadProps } from 'antd';
 import { Button, Upload, Layout, Switch, Space, message, Progress, Tag } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { uploadDirectAPI, preUploadFileAPI, uploadChunkAPI, mergeChunksAPI } from '~/apis/backstage/source';
-import { POINT_100KB, POINT_1M, CHUNKSIZE_100KB, CHUNKSIZE_500KB } from './uploadConfig';
+import { POINT_100KB, POINT_1M, CHUNKSIZE_100KB, CHUNKSIZE_1MB } from './uploadConfig';
 
 const { Header } = Layout
 
@@ -67,18 +67,23 @@ const UploadFile = () => {
     // 分片上传
     const handleChunkUpload = async (file: UploadFile) => {
         let CHUNK_SIZE: number
+
         const size = file.size!
         const newFile = file.originFileObj!
+
         if (size <= POINT_1M) {
             CHUNK_SIZE = CHUNKSIZE_100KB
         } else {
-            CHUNK_SIZE = CHUNKSIZE_500KB
+            CHUNK_SIZE = CHUNKSIZE_1MB
         }
+
         const TOTAL = Math.ceil(size / CHUNK_SIZE)
         let currentChunk = 1 // 切片序号
+
         while (currentChunk <= TOTAL) {
             const formData = new FormData()
             let chunkData
+
             // 如果是最后一个切片，就按照切片的实际大小传递给后端。因为最后一个切片的实际大小通常会小于CHUNK_SIZE
             // 这样传递的数据更精确，也更节省资源
             if (currentChunk == TOTAL) {
@@ -86,18 +91,22 @@ const UploadFile = () => {
             } else {
                 chunkData = newFile.slice(CHUNK_SIZE * (currentChunk - 1), CHUNK_SIZE * currentChunk)
             }
+
             formData.append("chunk", chunkData)
             formData.append("currentChunk", currentChunk + "")
+
             const res = await uploadChunkAPI(formData)
+            
             setFileList(preFileList => preFileList.map(v => {
                 return v.uid == res.data.uid
                     ? {
                         ...v,
-                        percent: Math.floor(res.data.sort / TOTAL)
+                        percent: Math.floor(res.data.sort / TOTAL * 100)
                     }
                     : v
             }))
-            await new Promise((resolve) => setTimeout(resolve, 60))
+            
+            await new Promise((resolve) => setTimeout(resolve, 50))
 
             // 全部切片上传完成后，开始合并切片
             if (currentChunk == TOTAL) {
@@ -192,8 +201,8 @@ const UploadFile = () => {
                 return <>
                     {originNode}
                     <Progress
-                        // success表示已经完成的进度
-                        success={{ percent: file.percent ?? 0, strokeColor: '#52c41a' }}
+                        percent={file.percent ?? 0}
+                        status={file.percent! < 100 ? 'active' : 'success'}
                     />
                 </>
             }}
