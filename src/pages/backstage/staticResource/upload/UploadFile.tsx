@@ -1,6 +1,6 @@
 /** 上传文件 */
-import { useState } from 'react'
-import { UploadOutlined } from '@ant-design/icons';
+import { useState, useEffect } from 'react'
+import { UploadOutlined, CloudUploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import { Button, Upload, Layout, Switch, Space, message, Progress, Tag } from 'antd';
 import type { UploadFile } from 'antd/es/upload/interface';
@@ -13,6 +13,7 @@ const UploadFile = () => {
 
     const [checked, setChecked] = useState<boolean>(false)
     const [fileList, setFileList] = useState<UploadFile[]>([]);
+    const [listUploading, setListUploading] = useState(false)
 
     // Upload组件默认是选择文件后自动发送上传请求的，但是实际情况下，并不需要这么做。
     // 一般的，我们选择文件后，都会点击上传按钮后才开始发送上传请求。
@@ -132,11 +133,16 @@ const UploadFile = () => {
     // 上传列表中的文件
     const handleUpload = async (fileList: UploadFile[]): Promise<void> => {
         if (!fileList || !fileList.length) return
+
         fileList = fileList.filter(v => v.percent != 100)
+
         if (!fileList.length) {
             message.warning('选择的文件都已完成上传！')
             return
         }
+
+        setListUploading(true)
+
         for (const file of fileList) {
             // 如果文件小于断点值，就直接上传，不做分片上传。
             if (file.size as number <= POINT_100KB) {
@@ -164,6 +170,12 @@ const UploadFile = () => {
             }
         }
     }
+
+    useEffect(() => { 
+        if (fileList && fileList.length > 0 && fileList.every(v => v.percent == 100)) {
+            setListUploading(false)
+        }
+    }, [fileList])
     
     return <>
         <Layout>
@@ -243,7 +255,22 @@ const UploadFile = () => {
             >
                 {
                     fileList && fileList.length
-                        ? <Button type='primary' onClick={() => {handleUpload(fileList)}}>开始上传</Button>
+                        ? <Button
+                            type='primary'
+                            onClick={() => {
+                                !listUploading && handleUpload(fileList)
+                            }}
+                            disabled={listUploading}
+                        >
+                            {
+                                listUploading
+                                    ? <Space>
+                                        <CloudUploadOutlined />
+                                        <span>上传中...</span>
+                                    </Space>
+                                    : <span>开始上传</span>
+                            }
+                        </Button>
                         : null
                 }
             </Header>
