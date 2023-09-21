@@ -1,6 +1,6 @@
 /** 管理后台首页 */
 import styles from './index.module.scss'
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Layout, Menu, Button, theme, Breadcrumb, ConfigProvider } from 'antd'
 import type { MenuProps } from 'antd';
@@ -26,6 +26,8 @@ const Home: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [openKeys, setOpenKeys] = useState<string[]>()
     const [selectedKeys, setSelectedKeys] = useState<string[]>()
+    const scrollRef = useRef<Scrollbars>(null)
+    const [backupVisible, setBackupVisible] = useState(false)
 
     const menuSelect: MenuProps['onSelect'] = (e) => {
         setSelectedKeys(e.keyPath.reverse())
@@ -115,7 +117,16 @@ const Home: React.FC = () => {
                         items={selectedKeys && selectKey2Position(selectedKeys.at(-1))}
                     />
                     <div className={styles.show_main}>
-                        <Scrollbars autoHide>
+                        <Scrollbars
+                            autoHide
+                            ref={scrollRef}
+                            onScroll={() => {
+                                if (scrollRef.current) {
+                                    const { scrollTop } = scrollRef.current.getValues();
+                                    setBackupVisible(scrollTop >= 300)
+                                }
+                            }}
+                        >
                             <Content
                                 style={{
                                     margin: '0 16px',
@@ -135,6 +146,13 @@ const Home: React.FC = () => {
                                 <span>Backstage ©2023 Create by github/guozi007a</span>
                             </Footer>
                         </Scrollbars>
+                        <div className={`${styles.back_up} ${backupVisible ? styles.active : ''}`} title='回到顶部'
+                            onClick={() => {
+                                scrollRef.current && scrollRef.current.scrollToTop()
+                            }}
+                        >
+                            <img src={AppUtils.serverImg('back-up.jpg')} alt="" />
+                        </div>
                     </div>
                 </Layout>
             </Layout>

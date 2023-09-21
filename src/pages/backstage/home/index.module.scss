@@ -36,4 +36,36 @@
     width: 100%;
     height: calc(100vh - 96px);
     overflow: hidden;
+
+    .back_up {
+        position: absolute;
+        z-index: 3;
+        right: 4rem;
+        bottom: 4rem;
+        width: 5rem;
+        height: 5rem;
+        cursor: pointer;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity .3s;
+        
+        img {
+            width: 100%;
+            height: 100%;
+            transition: all .3s;
+        }
+
+        &:hover {
+            img {
+                transform: scale(1.1);
+                transition: all .3s;
+            }
+        }
+
+        &.active {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity .3s;
+        }
+    }
 }
