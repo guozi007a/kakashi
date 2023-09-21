@@ -5,7 +5,6 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Layout, Menu, Button, theme, Breadcrumb, ConfigProvider } from 'antd'
 import type { MenuProps } from 'antd';
 import { Outlet, useNavigate } from "react-router-dom";
-import logoImg from '~/assets/images/logo/logo.png'
 import { items } from './menuConfig';
 import { transferOpenPath } from '~/utils/transferOpenPath';
 import { BACKSTAGE_ROOT, BACKSTAGE_ROUTE, BACKSTAGE_PATH } from '~/config/appRoot';
@@ -14,6 +13,7 @@ import { pathname2OpenPath } from '~/utils/pathname2OpenPath';
 import { selectKey2Position } from '~/utils/selectKey2Position';
 import Scrollbars from 'react-custom-scrollbars-2'
 import zhCN from 'antd/locale/zh_CN';
+import { AppUtils } from '~/utils/common';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -77,7 +77,7 @@ const Home: React.FC = () => {
                 >
                     <div className={styles.logo_img} title='Multi-App-blog'>
                         <a href={import.meta.env.ENV_BASE} className={styles.logo}>
-                            <img src={logoImg} alt="logo" />
+                            <img src={AppUtils.serverImg('logo.png')} alt="logo" />
                             {
                                 collapsed ? null : <span className={styles.logo_text}>Multi-App-blog</span>
                             }

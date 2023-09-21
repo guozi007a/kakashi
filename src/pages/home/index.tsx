@@ -3,13 +3,11 @@ import { useState } from 'react'
 import styles from './index.module.scss'
 import { useNavigate } from 'react-router-dom'
 import ContextMenu, { Position } from '~/components/contextMenu'
-
-import backstageImg from '~/assets/images/window-backstage.jpg'
-import projectLogImg from '~/assets/images/log.png'
+import { AppUtils } from '~/utils/common'
 
 const windowIcons = [
-    { id: 'backstage', name: '管理后台', url: backstageImg, path: '/backstage' },
-    { id: 'project-log', name: '项目开发日志', url: projectLogImg, path: '/project-dev-logs' },
+    { id: 'backstage', name: '管理后台', url: AppUtils.serverImg('window-backstage.jpg'), path: '/backstage' },
+    { id: 'project-log', name: '项目开发日志', url: AppUtils.serverImg('log.png'), path: '/project-dev-logs' },
 ]
 
 const Home = () => {
