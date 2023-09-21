@@ -220,6 +220,9 @@ const UploadFile = () => {
             }}
             onRemove={handleRemove}
             disabled={listUploading}
+            showUploadList={{
+                showRemoveIcon: !listUploading,
+            }}
         >
             <Space>
                 <Button icon={<UploadOutlined />}>选择文件</Button>
