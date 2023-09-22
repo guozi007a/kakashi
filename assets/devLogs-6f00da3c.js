@@ -1,1 +1,0 @@
-import{e as a,g as t,f as o,p as g}from"./request-2e8c74cd.js";const L=s=>a("/v1/publishLogs",{logs:s}),c=s=>t("/v1/getDateLogs",{date:s}),A=()=>t("/v1/getAllLogs"),p=s=>o("/v1/deleteDateLogs",{date:s}),n=()=>o("/v1/clearAllLogs"),r=(s,e)=>g("/v1/updateDateLogs",{date:s,logs:e}),v=(s,e)=>o("/v1/deleteOneLog",{id:s,date:e});export{c as a,n as b,p as c,A as g,L as p,v as r,r as u};
