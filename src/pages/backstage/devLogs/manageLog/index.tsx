@@ -281,7 +281,7 @@ const ManageLog = () => {
                             <Space>
                                 <Tooltip
                                     placement="topRight"
-                                    title="在将增加、删除、编辑等操作提交更新之前，都可以通过重置列表来让列表恢复到修改前的状态"
+                                    title="在将增加、编辑等操作提交更新之前，都可以通过重置列表来让列表恢复到修改前的状态"
                                 >
                                     <Button type='primary' onClick={handleReset}>重置列表</Button>
                                 </Tooltip>
@@ -301,7 +301,7 @@ const ManageLog = () => {
                         <Footer className={`${styles.footer} ${styles.summit_wrap}`}>
                             <Tooltip
                                 placement="bottom"
-                                title="增加、删除、编辑等三种方式，都需要提交更新，以完成最终操作"
+                                title="增加、编辑等三种方式，都需要提交更新，以完成最终操作"
                             >
                         <Button type='primary' className={styles.submit} onClick={submitUpdate}>提交更新</Button>
                         </Tooltip>
