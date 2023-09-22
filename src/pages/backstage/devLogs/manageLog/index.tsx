@@ -69,7 +69,7 @@ const ListItem = ({
             message.warning('缺少date')
             return
         }
-        
+
         await removeOneLogAPI(id, date)
         message.success('删除成功~')
         const list = logList.filter(v => v.id !== id)
@@ -107,9 +107,7 @@ const ListItem = ({
         message.success('操作成功~')
     }
 
-    const handleCancel = (id: string) => {
-        const list = logList.filter(v => v.id !== id)
-        handleLogList(list)
+    const handleCancel = () => {
         handleOperId('')
         message.success('成功取消更新日志~')
     }
@@ -136,9 +134,7 @@ const ListItem = ({
                                 }}
                             >确认</Button>
                             <Button type='primary' danger
-                                onClick={() => {
-                                    handleCancel(item.id)
-                                }}
+                                onClick={handleCancel}
                             >取消</Button>
                         </Space>
                     </>
