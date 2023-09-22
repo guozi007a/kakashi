@@ -18,3 +18,6 @@ export const clearAllLogsAPI = () => del('/v1/clearAllLogs')
 
 // 更新
 export const updateDateLogsAPI = (date: string, logs: InpItem[]) => put('/v1/updateDateLogs', { date, logs })
+
+// 删除单个日志
+export const removeOneLogAPI = (id: string, date: string) => del('/v1/deleteOneLog', { id, date })

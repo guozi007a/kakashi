@@ -7,7 +7,7 @@ import locale from 'antd/es/date-picker/locale/zh_CN';
 import { InpItem } from '../publishLog';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { getDateLogsAPI, clearDateLogsAPI, clearAllLogsAPI, updateDateLogsAPI } from '~/apis/backstage/devLogs';
+import { getDateLogsAPI, clearDateLogsAPI, clearAllLogsAPI, updateDateLogsAPI, removeOneLogAPI } from '~/apis/backstage/devLogs';
 import { shortCutKeys2LogIcon } from '~/utils/shortCutKeys2LogIcon';
 
 
@@ -17,6 +17,7 @@ type PropsConfig = {
     handleLogList: (logs: InpItem[]) => void
     operId: string
     handleOperId: (id: string) => void
+    date: string
 }
 
 const { Header, Content, Footer } = Layout
@@ -36,6 +37,7 @@ const ListItem = ({
     handleLogList,
     operId,
     handleOperId,
+    date,
 }: PropsConfig) => {
 
     const [val, setVal] = useState<string>('')
@@ -62,10 +64,16 @@ const ListItem = ({
         message.success('开始新增日志~')
     }
 
-    const handleDelete = (id: string) => {
+    const handleDelete = async (id: string, date: string) => {
+        if (!date) {
+            message.warning('缺少date')
+            return
+        }
+        
+        await removeOneLogAPI(id, date)
+        message.success('删除成功~')
         const list = logList.filter(v => v.id !== id)
         handleLogList(list)
-        message.success('删除成功~')
         id === operId && handleOperId('')
     }
 
@@ -144,7 +152,7 @@ const ListItem = ({
                             >增加</Button>
                             <Button type='primary' danger
                                 onClick={() => {
-                                    handleDelete(item.id)
+                                    handleDelete(item.id, date)
                                 }}
                             >删除</Button>
                             <Button type='primary' className={styles.edit_btn}
@@ -263,6 +271,7 @@ const ManageLog = () => {
                                 handleLogList={handleLogList}
                                 operId={operId}
                                 handleOperId={handleOperId}
+                                date={date}
                             />}
                             rowKey={(item) => item.key}
                         />
