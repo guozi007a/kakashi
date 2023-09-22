@@ -1,5 +1,5 @@
 /** 上传文件 */
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { UploadOutlined, CloudUploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import { Button, Upload, Layout, Switch, Space, message, Progress, Tag } from 'antd';
@@ -54,7 +54,7 @@ const UploadFile = () => {
     }
 
     // 预传
-    const handlePreUpload = async (file: UploadFile) => {
+    const handlePreUpload = async (file: UploadFile, fileIndex: number) => {
         if (file.percent == 100) return
         const formData = new FormData()
         formData.append("file", file.originFileObj!)
@@ -62,11 +62,11 @@ const UploadFile = () => {
         formData.append("type", file.type!)
         await preUploadFileAPI(formData)
         await new Promise((resolve) => setTimeout(resolve, 60))
-        handleChunkUpload(file)
+        handleChunkUpload(file, fileIndex)
     }
 
     // 分片上传
-    const handleChunkUpload = async (file: UploadFile) => {
+    const handleChunkUpload = async (file: UploadFile, fileIndex: number) => {
         let CHUNK_SIZE: number
 
         const size = file.size!
@@ -123,6 +123,8 @@ const UploadFile = () => {
                         : v
                 }))
                 message.success('完成合并，上传成功')
+
+                singleUpload(fileIndex + 1)
                 return
             }
 
@@ -130,8 +132,46 @@ const UploadFile = () => {
         }
     }
 
+    // 上传单个文件的逻辑处理 fileIndex表示当前正在上传的文件序号，从0开始
+    // 采用递归方式，每次等待上一个文件上传成功后，在开始上传下一个文件，以免上传造成冲突。
+    const singleUpload = async (fileIndex: number) => {
+        if (fileIndex >= fileList.length) {
+            setListUploading(false)
+            return
+        }
+
+        const file: UploadFile = fileList[fileIndex]
+
+        // 如果文件小于断点值，就直接上传，不做分片上传。
+        if (file.size as number <= POINT_100KB) {
+            // 创建直传参数
+            const formData = new FormData()
+            formData.append("file", file.originFileObj!)
+            formData.append("uid", file.uid)
+            formData.append("type", file.type!)
+            // 开始直传
+            const res = await uploadDirectAPI(formData)
+            message.success('上传完成！')
+            const { uid, path, progress } = res.data
+            // 使用函数式更新，确保每次可以即时更新为最新的上传进度
+            setFileList((preFileList: UploadFile[]) => preFileList.map((v, _) => {
+                return v.uid === uid
+                    ? { ...v, url: path,  percent: progress, }
+                    : v
+            }))
+
+            // 当前请求完成后，过120ms再进行下一个请求。因为for...of会等待Promise执行完毕，再继续执行。
+            // 在这里插入Promise语句，该语句过120ms后才会执行，上面的请求成功后，先等待了120ms
+            await new Promise((resolve) => setTimeout(resolve, 120))
+
+            singleUpload(fileIndex + 1)
+        } else {
+            handlePreUpload(file, fileIndex)
+        }
+    }
+
     // 上传列表中的文件
-    const handleUpload = async (fileList: UploadFile[]): Promise<void> => {
+    const handleUpload = (fileList: UploadFile[]) => {
         if (!fileList || !fileList.length) return
 
         fileList = fileList.filter(v => v.percent != 100)
@@ -143,39 +183,8 @@ const UploadFile = () => {
 
         setListUploading(true)
 
-        for (const file of fileList) {
-            // 如果文件小于断点值，就直接上传，不做分片上传。
-            if (file.size as number <= POINT_100KB) {
-                // 创建直传参数
-                const formData = new FormData()
-                formData.append("file", file.originFileObj!)
-                formData.append("uid", file.uid)
-                formData.append("type", file.type!)
-                // 开始直传
-                const res = await uploadDirectAPI(formData)
-                message.success('上传完成！')
-                const { uid, path, progress } = res.data
-                // 使用函数式更新，确保每次可以即时更新为最新的上传进度
-                setFileList((preFileList: UploadFile[]) => preFileList.map((v, _) => {
-                    return v.uid === uid
-                        ? { ...v, url: path,  percent: progress, }
-                        : v
-                }))
-
-                // 当前请求完成后，过120ms再进行下一个请求。因为for...of会等待Promise执行完毕，再继续执行。
-                // 在这里插入Promise语句，该语句过120ms后才会执行，上面的请求成功后，先等待了120ms
-                await new Promise((resolve) => setTimeout(resolve, 120))
-            } else {
-                handlePreUpload(file)
-            }
-        }
+        singleUpload(0)
     }
-
-    useEffect(() => { 
-        if (fileList && fileList.length > 0 && fileList.every(v => v.percent == 100)) {
-            setListUploading(false)
-        }
-    }, [fileList])
     
     return <>
         <Layout>
