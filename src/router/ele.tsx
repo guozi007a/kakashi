@@ -16,6 +16,8 @@ const ResourceOther = lazy(() => import('~/pages/backstage/staticResource/list/o
 const PublishLog = lazy(() => import('~/pages/backstage/devLogs/publishLog'))
 const ManageLog = lazy(() => import('~/pages/backstage/devLogs/manageLog'))
 
+const Blog = lazy(() => import('~/pages/blog'))
+
 export const ele: RouteObject[] = [
     {
         path: '/',
@@ -62,6 +64,10 @@ export const ele: RouteObject[] = [
     {
         path: '/project-dev-logs',
         element: gaurd(ProjectDevLogs)
+    },
+    {
+        path: '/blog',
+        element: gaurd(Blog),
     },
     {
         path: '*',

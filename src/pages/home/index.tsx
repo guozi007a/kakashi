@@ -8,6 +8,7 @@ import { AppUtils } from '~/utils/common'
 const windowIcons = [
     { id: 'backstage', name: '管理后台', url: AppUtils.serverImg('window-backstage.jpg'), path: '/backstage' },
     { id: 'project-log', name: '项目开发日志', url: AppUtils.serverImg('log.png'), path: '/project-dev-logs' },
+    { id: 'blog', name: '个人博客', url: AppUtils.serverImg('blog.png'), path: '/blog' },
 ]
 
 const Home = () => {
