@@ -13,23 +13,11 @@ $header-height: 6.4rem;
 
     .logo_wrap {
         display: flex;
+        align-items: center;
         height: 100%;
-    
-        .logo {
-            height: 100%;
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-    
-            img {
-                height: 50%;
-            }
-    
-            span {
-                font-family: var(--text-family-logo);
-                font-size: 1.8rem;
-                white-space: nowrap;
-            }
+
+        .logo_main {
+            height: 50%;
         }
     }
 }

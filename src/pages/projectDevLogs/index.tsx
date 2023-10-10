@@ -5,7 +5,7 @@ import { Timeline, FloatButton, Divider, Tag } from 'antd'
 import { ClockCircleOutlined } from '@ant-design/icons';
 import { getAllLogsAPI } from '~/apis/backstage/devLogs';
 import { useState, useEffect } from 'react';
-import { AppUtils } from '~/utils/common';
+import { Logo } from '~/components/logo';
 
 const { Header, Content} = Layout
 
@@ -41,10 +41,9 @@ const ProjectDevLogs = () => {
         <Layout>
             <Header className={styles.top_header}>
                 <div className={styles.logo_wrap}>
-                    <a href={import.meta.env.ENV_BASE} className={styles.logo}>
-                        <img src={AppUtils.serverImg('logo.png')} alt="" />
-                        <span>multi-app-blog</span>
-                    </a>
+                    <div className={styles.logo_main}>
+                        <Logo />
+                    </div>
                 </div>
             </Header>
             <Content className={styles.dev_log_wrap}>
