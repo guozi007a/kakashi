@@ -1,6 +1,7 @@
 /** 博客 */
 import styles from './index.module.scss'
 import { Logo } from '~/components/logo'
+import { Outlet } from 'react-router-dom'
 
 const themeColor = 'var(--pink)'
 
@@ -11,7 +12,9 @@ const Blog = () => {
                 <Logo fillColor={themeColor} textStyle={{color: themeColor}} />
             </div>
         </header>
-        <main style={{backgroundColor: themeColor}}>内容主体</main>
+        <main className={styles.main} style={{ backgroundColor: themeColor }}>
+            <Outlet />
+        </main>
         <footer className={styles.footer}>CopyRight ©2023 Author github.guozi007a</footer>
     </>
 }

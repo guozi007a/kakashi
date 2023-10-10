@@ -17,6 +17,7 @@ const PublishLog = lazy(() => import('~/pages/backstage/devLogs/publishLog'))
 const ManageLog = lazy(() => import('~/pages/backstage/devLogs/manageLog'))
 
 const Blog = lazy(() => import('~/pages/blog'))
+const BlogMain = lazy(() => import('~/pages/blog/main'))
 
 export const ele: RouteObject[] = [
     {
@@ -68,6 +69,12 @@ export const ele: RouteObject[] = [
     {
         path: '/blog',
         element: gaurd(Blog),
+        children: [
+            {
+                path: 'main',
+                element: gaurd(BlogMain),
+            }
+        ]
     },
     {
         path: '*',
