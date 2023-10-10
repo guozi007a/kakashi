@@ -21,7 +21,7 @@ const BlogMain = () => {
                                 <div className={styles.article_content}>
                                     <header className={styles.article_header}>
                                         <Tag color='blue'>html</Tag>
-                                        <p className={styles.article_title}>怎么写一个html页面？怎么写一个html页面？怎么写一个html页面？怎么写一个html页面？怎么写一个html页面？怎么写一个html页面？</p>
+                                        <p className={styles.article_title}>怎么写一个html页面？怎么写一个html页面？怎么写一个html页面？怎么写一个html页面？</p>
                                     </header>
                                     <article className={styles.article_desc}>文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述文章简要描述</article>
                                 </div>
