@@ -1,6 +1,6 @@
 import styles from './index.module.scss'
-import { LogoSvg } from '../LogoSvg'
-import type { FillStyle } from '../LogoSvg'
+import { LogoSvg } from './LogoSvg'
+import type { FillStyle } from './LogoSvg'
 
 type PropTypes = {
     linkStyle?: React.CSSProperties

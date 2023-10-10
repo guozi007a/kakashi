@@ -6,6 +6,7 @@
     --text-color-dark: rgba(0, 0, 0, .85);
     --text-color-light: rgba(255, 255, 255, .85);
     --text-color-dim: rgba(0, 0, 0, 0.45);
+    --text-color-ink: #555666;
 
     --button-green: #87d068;
     --button-green-hover: #84e43b;
