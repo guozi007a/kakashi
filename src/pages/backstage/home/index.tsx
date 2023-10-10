@@ -14,6 +14,7 @@ import { selectKey2Position } from '~/utils/selectKey2Position';
 import Scrollbars from 'react-custom-scrollbars-2'
 import zhCN from 'antd/locale/zh_CN';
 import { AppUtils } from '~/utils/common';
+import { Logo } from '~/components/logo';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -77,13 +78,8 @@ const Home: React.FC = () => {
                     collapsible
                     collapsed={collapsed}
                 >
-                    <div className={styles.logo_img} title='Multi-App-blog'>
-                        <a href={import.meta.env.ENV_BASE} className={styles.logo}>
-                            <img src={AppUtils.serverImg('logo.png')} alt="logo" />
-                            {
-                                collapsed ? null : <span className={styles.logo_text}>Multi-App-blog</span>
-                            }
-                        </a>
+                    <div className={styles.logo_wrap}>
+                        <Logo textStyle={collapsed ? {display: 'none'} : {overflow: 'hidden', color: 'var(--blue-2)', fontSize: '1.6rem'}} />
                     </div>
                     <Menu
                         theme="dark"
