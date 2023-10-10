@@ -10,5 +10,5 @@ export const AppUtils: AppUtilType = {
     isMobile: /Android|webOS|iPhone|iPod|BlackBerry|ipad/i.test(navigator.userAgent),
 
     // 获取服务器图片地址
-    serverImg: (name) => `${import.meta.env.ENV_IMAGE_PATH}${name}`,
+    serverImg: (name) => name ? `${import.meta.env.ENV_IMAGE_PATH}${name}` : '',
 }

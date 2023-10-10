@@ -6,6 +6,7 @@ import { queryFileListAPI, solfDeleteFileAPI, updateFileAPI } from '~/apis/backs
 import type { FileList } from '~/apis/backstage/source';
 import { transferFileSize } from '~/utils/transferFileSize';
 import dayjs from 'dayjs';
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 type OptionType = 'date' | 'size'
 
@@ -249,7 +250,16 @@ const FileList = ({ category }: PropsType) => {
                                                 />
                                                 <Tag color='#55acee'>{item.name.match(/\.\w+$/)![0]}</Tag>
                                             </Space>
-                                            : <a href={`${import.meta.env.ENV_PREFIX}/static/${category}/${item.name}`} target='_blank'>{item.name}</a>
+                                            : <Space>
+                                                <a href={`${import.meta.env.ENV_PREFIX}/static/${category}/${item.name}`} target='_blank'>{item.name}</a>
+                                                <CopyToClipboard text={item.name}
+                                                    onCopy={()=>{
+                                                        message.success('复制成功！')
+                                                    }}
+                                                >
+                                                    <Button type='primary' size='small' style={{backgroundColor: 'var(--button-green)'}}>复制</Button>
+                                                </CopyToClipboard>
+                                            </Space>
                                     }
                                 </>}
                                 description={<>

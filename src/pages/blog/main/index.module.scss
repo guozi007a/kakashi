@@ -1,0 +1,26 @@
+.main {
+    position: relative;
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+    padding: 2.4rem;
+
+    .part1 {
+        width: 26rem;
+        height: 40rem;
+        background-color: var(--primary-light);
+        border-radius: 2rem;
+        box-shadow: 0 0 2rem 1rem var(--light-1);
+    }
+
+    .part2 {
+        flex: auto;
+    }
+
+    .part3 {
+        width: 20rem;
+        height: 50rem;
+        background-color: var(--primary-light);
+        border-radius: 2rem;
+    }
+}
