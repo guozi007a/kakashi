@@ -18,6 +18,7 @@
     /* 通用型 */
     --light-1: rgba(255, 255, 255, 0.12);
     --light-2: rgb(135 135 135 / 4%);
+    --light-3: rgb(0 0 0 / 7%);
     
     --gray-1: #dddddd;
     --gray-2: #cacbca;
