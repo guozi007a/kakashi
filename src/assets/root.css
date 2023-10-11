@@ -13,9 +13,11 @@
 
     --text-family-1: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
     --text-family-logo: 'Russo One', sans-serif;
+    --text-family-copyright: 'Modern Antiqua', cursive;
 
     /* 通用型 */
     --light-1: rgba(255, 255, 255, 0.12);
+    --light-2: rgb(135 135 135 / 4%);
     
     --gray-1: #dddddd;
     --gray-2: #cacbca;

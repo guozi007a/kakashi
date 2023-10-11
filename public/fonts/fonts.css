@@ -4,3 +4,10 @@
     font-weight: 400;
     src: url('./RussoOne-Regular.ttf') format('truetype');
 }
+
+@font-face {
+    font-family: 'Modern Antiqua';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./Modern-Antiqua.woff2') format('woff2');
+}
