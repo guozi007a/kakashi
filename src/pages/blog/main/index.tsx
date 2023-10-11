@@ -1,9 +1,15 @@
+import { useState } from 'react'
 import styles from './index.module.scss'
 import { AppUtils } from '~/utils/common'
 import AliIcon from '~/components/aliIcon'
 import { Tag } from 'antd'
+import { useBlogThemeColorStore } from '~/store/useBlogThemeColorStore'
 
 const BlogMain = () => {
+    const themeColor = useBlogThemeColorStore(state => state.blogThemeColor)
+    const [isLike, setIsLike] = useState(false)
+    const [likeState, setLikeState] = useState<number>(-1)
+
     return <main className={styles.main}>
         <section className={styles.part1}>
             <section className={styles.avatar}>
@@ -27,23 +33,40 @@ const BlogMain = () => {
                                 </div>
                                 <footer className={styles.article_footer}>
                                     <section className={styles.thumb_up} title='点赞数'>
-                                        <AliIcon icon='icon-icon' />
+                                        <section
+                                            onClick={() => {
+                                                setIsLike(!isLike)
+                                                setLikeState(Number(!isLike))
+                                            }}
+                                        >
+                                            <AliIcon icon={isLike ? 'icon-dianzan' : 'icon-icon'} fillColor={isLike ? themeColor : ''} />
+                                        </section>
                                         <span>2333</span>
+                                        <p className={`${styles.add} ${likeState === 1 ? styles.active : ''}`}>+ 1</p>
+                                        <p className={`${styles.decr} ${likeState === 0 ? styles.active : ''}`}>- 1</p>
                                     </section>
                                     <section className={styles.thumb_down} title='差评数'>
-                                        <AliIcon icon='icon-chaping' />
+                                        <section>
+                                            <AliIcon icon='icon-chaping' />
+                                        </section>
                                         <span>666</span>
                                     </section>
                                     <section className={styles.collect} title='收藏数'>
-                                        <AliIcon icon='icon-shoucang' />
+                                        <section>
+                                            <AliIcon icon='icon-shoucang' />
+                                        </section>
                                         <span>888</span>
                                     </section>
                                     <section className={styles.talk} title='评论数'>
-                                        <AliIcon icon='icon-pinglun' />
+                                        <section>
+                                            <AliIcon icon='icon-pinglun' />
+                                        </section>
                                         <span>11.4k</span>
                                     </section>
                                     <section className={styles.date} title='发布时间'>
-                                        <AliIcon icon='icon-shijian' />
+                                        <section>
+                                            <AliIcon icon='icon-shijian' />
+                                        </section>
                                         <span>2023-10-10 19:02:23</span>
                                     </section>
                                 </footer>

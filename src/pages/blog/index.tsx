@@ -2,10 +2,12 @@
 import styles from './index.module.scss'
 import { Logo } from '~/components/logo'
 import { Outlet } from 'react-router-dom'
+import { useBlogThemeColorStore } from '~/store/useBlogThemeColorStore'
 
-const themeColor = 'var(--pink)'
 
 const Blog = () => {
+    const themeColor = useBlogThemeColorStore(state => state.blogThemeColor)
+    
     return <>
         <header className={styles.header}>
             <div className={styles.logo_wrap}>
