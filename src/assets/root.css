@@ -30,10 +30,17 @@
     --blue-1: #27A0FF;
     --blue-2: #3699ea;
     --blue-3: #1677ff;
+    --blue-4: #5a9dfc;
 
     --green-1: rgb(82, 196, 26);
 
     --pink: pink;
+
+    --red-1: #f44;
+    --red-2: #fc6767;
+    --red-3: #ff92a5;
+
+    --gold-1: rgb(236, 210, 58);
 
     --shadow-1: 0 0 0.6rem 0.2rem rgba(0, 0, 0, .2);
     --shadow-2: 0 0 0 2px #f44, 1.5em 0 0 2px #9b3, 3em 0 0 2px #fb5; /* 苹果电脑的三个点 */

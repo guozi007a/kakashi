@@ -131,3 +131,31 @@ export const blogCate = [
         count: 0,
     }
 ]
+
+// 建议留言的状态
+export const leaveMsgState = [
+    {
+        state: 1,
+        icon: 'icon-daishenhe',
+        text: '等待博主查看该留言~',
+        color: 'var(--gold-1)',
+    },
+    {
+        state: 2,
+        icon: 'icon-daichuli2',
+        text: '博主已查看该留言~',
+        color: 'var(--pink)',
+    },
+    {
+        state: 3,
+        icon: 'icon-yijujue',
+        text: '该留言未被采纳~',
+        color: 'var(--red-1)',
+    },
+    {
+        state: 4,
+        icon: 'icon-adopted',
+        text: '该留言已被采纳!',
+        color: 'var(--green-1)',
+    },
+]

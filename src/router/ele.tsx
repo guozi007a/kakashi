@@ -19,6 +19,10 @@ const ManageLog = lazy(() => import('~/pages/backstage/devLogs/manageLog'))
 const Blog = lazy(() => import('~/pages/blog'))
 const BlogMain = lazy(() => import('~/pages/blog/main'))
 const BlogPage = lazy(() => import('~/pages/blog/page'))
+const BlogList = lazy(() => import('~/pages/blog/list'))
+const BlogLeaveList = lazy(() => import('~/pages/blog/leaveList'))
+const LeavePublish = lazy(() => import('~/pages/blog/leaveList/publish'))
+const LeaveSuccess = lazy(() => import('~/pages/blog/leaveList/success'))
 
 export const ele: RouteObject[] = [
     {
@@ -60,7 +64,7 @@ export const ele: RouteObject[] = [
             {
                 path: 'dev-log/manage-log',
                 element: gaurd(ManageLog)
-            }
+            },
         ]
     },
     {
@@ -78,6 +82,22 @@ export const ele: RouteObject[] = [
             {
                 path: 'page/:id',
                 element: gaurd(BlogPage),
+            },
+            {
+                path: 'list/:id',
+                element: gaurd(BlogList),
+            },
+            {
+                path: 'leave-list',
+                element: gaurd(BlogLeaveList),
+            },
+            {
+                path: 'leave-publish',
+                element: gaurd(LeavePublish),
+            },
+            {
+                path: 'leave-success',
+                element: gaurd(LeaveSuccess),
             },
         ]
     },

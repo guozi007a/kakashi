@@ -1,0 +1,19 @@
+.list {
+    box-sizing: border-box;
+    padding: 2rem;
+    padding-top: 0;
+
+    .to_publish {
+        width: 8rem;
+        height: 3.2rem;
+        text-align: center;
+        line-height: 3.2rem;
+        font-size: 1.4rem;
+        background-color: var(--primary-light);
+        color: var(--pink);
+        user-select: none;
+        cursor: pointer;
+        margin-top: 2rem;
+        border-radius: 0.4rem;
+    }
+}

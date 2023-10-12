@@ -16,7 +16,11 @@ const BlogMain = () => {
                 <img src={AppUtils.serverImg('temp-avatar.png')} alt="" />
             </section>
             <p className={styles.nick}>guozi007a(小拽)</p>
-            <p className={styles.give_msg} style={{backgroundColor: themeColor}}>建议留言</p>
+            <p className={styles.give_msg} style={{ backgroundColor: themeColor }}
+                onClick={() => {
+                    AppUtils.openPage('blog/leave-list')
+                }}
+            >建议留言</p>
         </section>
         <section className={styles.part2}>
             <p className={styles.title}>最新文章(15)</p>
@@ -31,8 +35,8 @@ const BlogMain = () => {
             </section>
         </section>
         <section className={styles.part3}>
-            <section className={styles.article_cate}>
-                <section className={styles.cate_text}>
+            <section className={`${styles.item} ${styles.categary}`}>
+                <section className={styles.text}>
                     <AliIcon icon='icon-fenlei' />
                     <span>文章分类</span>
                 </section>
@@ -42,7 +46,11 @@ const BlogMain = () => {
                             {
                                 blogCate.map((v) => {
                                     return <li key={v.id} className={styles.cate_li}>
-                                        <p className={styles.cate}>
+                                        <p className={styles.cate}
+                                            onClick={() => {
+                                                AppUtils.openPage(`blog/list/${v.id}`)
+                                            }}
+                                        >
                                             <span>{v.cate}</span>
                                             <span>{v.count}</span>
                                         </p>
@@ -53,8 +61,14 @@ const BlogMain = () => {
                     </Scrollbars>
                 </section>
             </section>
-            <section className={styles.corperation}>
-                <section className={styles.corp_text}>
+            <section className={styles.item}>
+                <section className={styles.text}>
+                    <AliIcon icon='icon-_zuopinzhuzuoquan' />
+                    <span>我的作品</span>
+                </section>
+            </section>
+            <section className={styles.item}>
+                <section className={styles.text}>
                     <AliIcon icon='icon-hezuo' />
                     <span>商务合作</span>
                 </section>

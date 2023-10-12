@@ -2,17 +2,14 @@
 import styles from './index.module.scss'
 import { Tag } from 'antd'
 import BlogItemFooter from '../itemFooter'
+import { AppUtils } from '~/utils/common'
 
 const BlogItem = () => {
-
-    const handleOpen = (id: string) => {
-        window.open(`${import.meta.env.ENV_BASE}blog/page/${id}`, '_blank', 'noopener,noreferrer')
-    }
 
     return <li className={styles.article_li}>
         <div className={styles.article_content}
             onClick={() => {
-                handleOpen('111')
+                AppUtils.openPage('blog/page/111')
             }}
         >
             <header className={styles.article_header}>

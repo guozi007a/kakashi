@@ -76,8 +76,7 @@
         box-sizing: border-box;
         padding: 2.4rem 0;
 
-        .article_cate,
-        .corperation {
+        .item {
             position: relative;
             width: 100%;
             height: 4rem;
@@ -88,8 +87,7 @@
             box-sizing: border-box;
             padding: 0 2.4rem;
 
-            .cate_text,
-            .corp_text {
+            .text {
                 height: 100%;
                 display: flex;
                 justify-content: center;
@@ -150,15 +148,15 @@
                 background-color: var(--light-3);
                 transition: background-color .3s;
             }
-        }
 
-        .article_cate {
-            margin-top: 0;
-
-            &:hover {
-                .cate_main {
-                    visibility: visible;
-                    opacity: 1;
+            &.categary {
+                margin-top: 0;
+    
+                &:hover {
+                    .cate_main {
+                        visibility: visible;
+                        opacity: 1;
+                    }
                 }
             }
         }
