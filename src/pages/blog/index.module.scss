@@ -4,12 +4,57 @@
     height: 8rem;
     position: relative;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
     padding: 0 2.4rem;
 
     .logo_wrap {
         height: 4rem;
+    }
+
+    .search_wrap {
+        width: 30.6rem;
+        height: 3.4rem;
+        display: flex;
+        align-items: center;
+
+        .inp {
+            flex: auto;
+            height: 100%;
+            box-sizing: border-box;
+            padding: 0 1.8rem;
+            box-sizing: border-box;
+            border: 0.1rem solid var(--gray-3);
+            border-right: none;
+            border-radius: 0.4rem 0 0 0.4rem;
+
+            &::-webkit-input-placeholder { // 修改placeholder颜色并做兼容处理
+                color: var(--text-color-dim);
+            }
+            &:-moz-placeholder {
+                color: var(--text-color-dim);
+            }
+            &::-moz-placeholder {
+                color: var(--text-color-dim);
+            }
+            &:-ms-input-placeholder {
+                color: var(--text-color-dim);
+            }
+        }
+
+        .search_icon {
+            flex-shrink: 0;
+            width: 3.4rem;
+            height: 3.4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background-color: var(--pink);
+            color: var(--primary-light);
+            border-radius: 0 0.4rem 0.4rem 0;
+        }
     }
 }
 
@@ -25,4 +70,28 @@
     text-align: center;
     line-height: 6rem;
     font-family: var(--text-family-copyright);
+}
+
+.back_top {
+    position: fixed;
+    z-index: 9;
+    right: 2rem;
+    bottom: 6rem;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background-color: var(--primary-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    visibility: visible;
+    opacity: 1;
+    transition: all .3s;
+
+    &.hide {
+        visibility: hidden;
+        opacity: 0;
+        transition: all .3s;
+    }
 }

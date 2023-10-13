@@ -73,9 +73,39 @@
         overflow: hidden;
         white-space: normal;
         word-break: break-word;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
+
+        &.active {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+    }
+
+    .slide {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 0.5rem;
+
+        .hide_btn,
+        .slide_btn {
+            width: 5.6rem;
+            height: 2.4rem;
+            text-align: center;
+            line-height: 2.4rem;
+            letter-spacing: 0.2rem;
+            user-select: none;
+            cursor: pointer;
+            color: var(--primary-light);
+            border-radius: 0.4rem;
+        }
+
+        .hide_btn {
+            background-color: var(--blue-1);
+        }
+        .slide_btn {
+            background-color: var(--pink);
+        }
     }
 
     .leave_state {

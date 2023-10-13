@@ -15,7 +15,7 @@ const BlogLeaveList = () => {
             >我要留言</section>
             <ul className={styles.list_ul}>
                 {
-                    [1, 2, 3].map((_, i) => {
+                    [1, 2, 3, 4].map((_, i) => {
                         return <Item key={i} />
                     })
                 }

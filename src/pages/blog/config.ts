@@ -159,3 +159,6 @@ export const leaveMsgState = [
         color: 'var(--green-1)',
     },
 ]
+
+// 设置backTop显示的断点位置
+export const BACK_TOP_POINT = 400
