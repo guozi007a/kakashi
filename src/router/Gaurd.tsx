@@ -16,6 +16,10 @@ const GaurdRouter = ({ Component }: PropType) => {
         if (path.endsWith('/blog')) {
             navigate(path + '/main')
         }
+
+        if (path.endsWith('/blog/msg-center')) {
+            navigate(path + '/comment')
+        }
         
     }, [location.pathname])
 

@@ -162,3 +162,10 @@ export const leaveMsgState = [
 
 // 设置backTop显示的断点位置
 export const BACK_TOP_POINT = 400
+
+// 不同的消息类型
+export const msgCates = [
+    { id: 'comment', text: '评论', icon: 'icon-aite', },
+    { id: 'mail', text: '站内信', icon: 'icon-zhanneixin', },
+    { id: 'system', text: '系统消息', icon: 'icon-xitongtongzhi', },
+]

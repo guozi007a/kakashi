@@ -6,8 +6,11 @@ import { Outlet } from 'react-router-dom'
 import { useBlogThemeColorStore } from '~/store/useBlogThemeColorStore'
 import AliIcon from '~/components/aliIcon'
 import { BACK_TOP_POINT } from './config'
+import { QRCodeCanvas } from 'qrcode.react';
+import { useNavigate } from 'react-router-dom'
 
 const Blog = () => {
+    const navigate = useNavigate()
     const themeColor = useBlogThemeColorStore(state => state.blogThemeColor)
     const [isVisible, setIsVisible] = useState(false)
 
@@ -43,7 +46,35 @@ const Blog = () => {
                     <AliIcon icon='icon-sousuo' iconStyle={{width: '60%', height: '60%'}} />
                 </div>
             </div>
-            <div className={styles.others}></div>
+            <div className={styles.others}>
+                <div className={styles.phone} title='手机查看'>
+                    <div className={styles.phone_icon}>
+                        <AliIcon icon='icon-shouji' iconStyle={{width: '100%', height: '100%', color: themeColor}} />
+                    </div>
+                    <div className={styles.qrcode}>
+                        <QRCodeCanvas
+                            value={`${import.meta.env.ENV_ORIGIN}/blog/main`}
+                            // bgColor='pink'
+                            // fgColor='#fff'
+                            level='H'
+                            size={100}
+                            includeMargin={true}
+                            imageSettings={{
+                                src: `${import.meta.env.ENV_IMAGE_PATH}logo.png`,
+                                excavate: true,
+                                width: 20,
+                                height: 20,
+                            }}
+                        />
+                    </div>
+                </div>
+                <div className={styles.msgs} title='消息'
+                    onClick={() => {navigate(`${import.meta.env.ENV_BASE}blog/msg-center`)}}
+                >
+                    <AliIcon icon='icon-shouye' iconStyle={{width: '100%', height: '100%', color: themeColor}} />
+                    <p className={styles.count}>99+</p>
+                </div>
+            </div>
         </header>
         <main className={styles.main} style={{ backgroundColor: themeColor }}>
             <Outlet />

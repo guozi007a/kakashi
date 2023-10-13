@@ -23,6 +23,9 @@ const BlogList = lazy(() => import('~/pages/blog/list'))
 const BlogLeaveList = lazy(() => import('~/pages/blog/leaveList'))
 const LeavePublish = lazy(() => import('~/pages/blog/leaveList/publish'))
 const LeaveSuccess = lazy(() => import('~/pages/blog/leaveList/success'))
+const MsgCenter = lazy(() => import('~/pages/blog/msg'))
+const MsgComment = lazy(() => import('~/pages/blog/msg/comment'))
+const MsgSystem = lazy(() => import('~/pages/blog/msg/system'))
 
 export const ele: RouteObject[] = [
     {
@@ -98,6 +101,20 @@ export const ele: RouteObject[] = [
             {
                 path: 'leave-success',
                 element: gaurd(LeaveSuccess),
+            },
+            {
+                path: 'msg-center',
+                element: gaurd(MsgCenter),
+                children: [
+                    {
+                        path: 'comment',
+                        element: gaurd(MsgComment),
+                    },
+                    {
+                        path: 'system',
+                        element: gaurd(MsgSystem),
+                    },
+                ]
             },
         ]
     },

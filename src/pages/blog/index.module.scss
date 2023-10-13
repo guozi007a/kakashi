@@ -56,6 +56,62 @@
             border-radius: 0 0.4rem 0.4rem 0;
         }
     }
+
+    .others {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+
+        .msgs,
+        .phone {
+            width: 3.4rem;
+            height: 3.4rem;
+            position: relative;
+        }
+
+        .msgs {
+            cursor: pointer;
+
+            .count {
+                position: absolute;
+                z-index: 1;
+                bottom: 100%;
+                left: 0;
+                width: 100%;
+                text-align: end;
+                font-size: 1.2rem;
+                color: var(--red-1);
+            }
+        }
+
+        .phone {
+            .phone_icon {
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+            }
+
+            .qrcode {
+                position: absolute;
+                z-index: 3;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 10rem;
+                height: 0;
+                overflow: hidden;
+                transition: height .3s;
+            }
+
+            &:hover {
+                .qrcode {
+                    height: 10rem;
+                    transition: height .3s;
+                    border-radius: 0.4rem;
+                }
+            }
+        }
+    }
 }
 
 .main {
