@@ -1,0 +1,1 @@
+import{j as s}from"./index-585a7c12.js";const l="_aliIcon_1il39_1",e="_icon_1il39_8",i={aliIcon:l,icon:e},a=({iconStyle:n,fillColor:c,icon:o})=>s.jsx("section",{className:i.aliIcon,style:n,children:s.jsx("svg",{className:i.icon,"aria-hidden":"true",style:{fill:c},children:s.jsx("use",{xlinkHref:`#${o}`})})});export{a as A};
