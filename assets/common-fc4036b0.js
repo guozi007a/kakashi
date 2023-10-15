@@ -1,0 +1,1 @@
+const o={isMobile:/Android|webOS|iPhone|iPod|BlackBerry|ipad/i.test(navigator.userAgent),serverImg:e=>e?`https://multi-app-blog.fun:9000/static/image/${e}`:"",openPage(e){window.open(`/multi-app-blog/${e}`,"_blank","noopener,noreferrer")}};export{o as A};
