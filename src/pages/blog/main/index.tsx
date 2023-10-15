@@ -6,8 +6,10 @@ import { useBlogThemeColorStore } from '~/store/useBlogThemeColorStore'
 import { blogCate } from '../config'
 import Scrollbars from 'react-custom-scrollbars-2'
 import AliIcon from '~/components/aliIcon'
+import { useNavigate } from 'react-router-dom'
 
 const BlogMain = () => {
+    const navigate = useNavigate()
     const themeColor = useBlogThemeColorStore(state => state.blogThemeColor)
 
     return <main className={styles.main}>
@@ -68,7 +70,9 @@ const BlogMain = () => {
                 </section>
             </section>
             <section className={styles.item}>
-                <section className={styles.text}>
+                <section className={styles.text}
+                    onClick={() => {navigate('/blog/msg-center/mail')}}
+                >
                     <AliIcon icon='icon-hezuo' />
                     <span>商务合作</span>
                 </section>
