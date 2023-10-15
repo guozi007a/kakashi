@@ -26,6 +26,8 @@ const LeaveSuccess = lazy(() => import('~/pages/blog/leaveList/success'))
 const MsgCenter = lazy(() => import('~/pages/blog/msg'))
 const MsgComment = lazy(() => import('~/pages/blog/msg/comment'))
 const MsgSystem = lazy(() => import('~/pages/blog/msg/system'))
+const MsgMail = lazy(() => import('~/pages/blog/msg/mail'))
+const MsgSetting = lazy(() => import('~/pages/blog/msg/setting'))
 
 export const ele: RouteObject[] = [
     {
@@ -114,8 +116,16 @@ export const ele: RouteObject[] = [
                         path: 'system',
                         element: gaurd(MsgSystem),
                     },
+                    {
+                        path: 'mail',
+                        element: gaurd(MsgMail),
+                    },
                 ]
             },
+            {
+                path: 'msg-center/setting',
+                element: gaurd(MsgSetting),
+            }
         ]
     },
     {

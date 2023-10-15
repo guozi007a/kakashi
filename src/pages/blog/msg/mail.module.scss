@@ -1,0 +1,353 @@
+.mail_wrap {
+    box-sizing: border-box;
+    padding: 2rem;
+    
+    .mail {
+        width: 100%;
+        height: 68rem;
+        border: 0.1rem solid var(--gray-5);
+        display: flex;
+
+        .friends {
+            width: 32rem;
+            height: 100%;
+            box-sizing: border-box;
+            border-right: 0.1rem solid var(--gray-5);
+
+            .friends_main {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                position: relative;
+
+                .friend {
+                    width: 100%;
+                    box-sizing: border-box;
+                    padding: 2rem 1rem;
+                    display: flex;
+                    justify-content: space-between;
+                    border-bottom: 0.1rem solid var(--gray-5);
+                    user-select: none;
+                    cursor: pointer;
+    
+                    .friend_main {
+                        flex: auto;
+                        display: flex;
+                        gap: 1rem;
+    
+                        .avatar {
+                            flex-shrink: 0;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            width: 5rem;
+                            height: 5rem;
+    
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                border-radius: 50%;
+                                cursor: pointer;
+                            }
+                        }
+    
+                        .friend_data {
+                            width: 16rem;
+    
+                            .nick_wrap {
+                                display: flex;
+                                align-items: center;
+                                gap: 1rem;
+    
+                                .nick {
+                                    flex: auto;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                }
+    
+                                .tag {
+                                    flex-shrink: 0;
+                                    height: 2rem;
+                                    line-height: 1.8rem;
+                                    box-sizing: border-box;
+                                    padding: 0 0.8rem;
+                                    border: 0.1rem solid var(--gray-1);
+                                    border-radius: 0.4rem;
+                                    user-select: none;
+                                    color: var(--text-color-gentle);
+                                    font-size: 1.2rem;
+                                }
+                            }
+    
+                            .desc {
+                                width: 100%;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                margin-top: 2rem;
+                                color: var(--text-color-gentle);
+                            }
+                        }
+                    }
+    
+                    .date_wrap {
+                        font-size: 1.2rem;
+                        white-space: nowrap;
+                        color: var(--text-color-gentle);
+
+                        .shield {
+                            display: flex;
+                            justify-content: center;
+                            margin-top: 1rem;
+                            color: var(--gray-5);
+                        }
+                    }
+                }
+            }
+        }
+
+        .chat {
+            flex: auto;
+
+            .header {
+                position: relative;
+                width: 100%;
+                height: 6rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                box-sizing: border-box;
+                padding: 0 2rem;
+
+                .nick {
+                    max-width: 16rem;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                .oper {
+                    cursor: pointer;
+
+                    &:hover {
+                        color: var(--pink);
+                    }
+                }
+
+                .oper_wrap {
+                    position: absolute;
+                    z-index: 2;
+                    top: 100%;
+                    right: 0;
+                    width: 30rem;
+                    box-sizing: border-box;
+                    padding: 2rem;
+                    box-shadow: var(--shadow-1);
+                    visibility: hidden;
+                    opacity: 0;
+                    transition: all .3s;
+
+                    &.active {
+                        visibility: visible;
+                        opacity: 1;
+                        transition: all .3s;
+                    }
+
+                    .oper_main {
+                        width: 100%;
+
+                        .oper_ul {
+                            .oper_li {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                width: 100%;
+                                height: 4rem;
+
+                                .switch {
+                                    position: relative;
+                                    width: 3.2rem;
+                                    height: 1.6rem;
+                                    background-color: var(--light-3);
+                                    border-radius: 0.8rem;
+                                    cursor: pointer;
+                                    transition: all .3s;
+
+                                    .btn {
+                                        position: absolute;
+                                        z-index: 1;
+                                        top: 50%;
+                                        transform: translateY(-50%);
+                                        left: 0.2rem;
+                                        width: 1.4rem;
+                                        height: 1.2rem;
+                                        border-radius: 0.6rem;
+                                        background-color: var(--primary-light);
+                                        box-shadow: var(--shadow-3);
+                                        transition: all .3s;
+                                    }
+
+                                    &.active {
+                                        background-color: var(--pink);
+                                        transition: all .3s;
+
+                                        .btn {
+                                            left: 1.6rem;
+                                            transition: all .3s;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .chat_main {
+                width: 100%;
+                height: 40rem;
+                box-sizing: border-box;
+                padding: 0 2rem;
+                border-top: 0.1rem solid var(--gray-5);
+                border-bottom: 0.1rem solid var(--gray-5);
+            }
+
+            .edit {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 0 1.6rem;
+                
+                .tool_bar {
+                    position: relative;
+                    width: 100%;
+                    height: 4rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 1.5rem;
+
+                    .emoji,
+                    .img {
+                        position: relative;
+                        width: 2rem;
+                        height: 2rem;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        cursor: pointer;
+                    }
+
+                    .img {
+                        .inp {
+                            display: none;
+                        }
+                    }
+
+                    .menu {
+                        position: absolute;
+                        z-index: 2;
+                        bottom: calc(100% + 0.4rem);
+                        left: 0;
+                        width: 45rem;
+                        height: 32rem;
+                        box-sizing: border-box;
+                        padding: 2rem 0;
+                        background-color: var(--primary-light);
+                        box-shadow: var(--shadow-1);
+                        border-radius: 0.4rem;
+                        visibility: hidden;
+                        opacity: 0;
+                        transition: all .3s;
+
+                        &.active {
+                            visibility: visible;
+                            opacity: 1;
+                            transition: all .3s;
+                        }
+
+                        .menu_main {
+                            position: relative;
+                            width: 100%;
+                            height: 100%;
+                            overflow: hidden;
+                            box-sizing: border-box;
+                            padding-left: 2.4rem;
+
+                            .menu_ul {
+                                display: flex;
+                                flex-wrap: wrap;
+                                gap: 2rem;
+
+                                .menu_li {
+                                    width: 3.2rem;
+                                    height: 3.2rem;
+                                    cursor: pointer;
+
+                                    img {
+                                        width: 100%;
+                                        height: 100%;
+                                    }
+
+                                    &:hover {
+                                        background-color: var(--gray-5);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .edit_area {
+                    width: 100%;
+                    height: 14rem;
+                    
+                    .content {
+                        width: 100%;
+                        height: 100%;
+                        resize: none;
+                        line-height: 1.4em;
+
+                        &::-webkit-scrollbar,
+                        &::-webkit-scrollbar-track {
+                            width: 0.6rem;
+                            background-color: transparent;
+                        }
+                        &::-webkit-scrollbar-thumb {
+                            width: 0.6rem;
+                            background-color: var(--pink);
+                            border-radius: 0.3rem;
+                        }
+                    }
+                }
+
+                .send_wrap {
+                    height: 4rem;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    .text_count {
+                        color: var(--text-color-ink);
+                    }
+
+                    .send_btn {
+                        width: 7.4rem;
+                        height: 2.8rem;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border: 0.1rem solid var(--gray-5);
+                        border-radius: 0.4rem;
+                        user-select: none;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        gap: 1rem;
+                        color: var(--text-color-gentle);
+                        font-size: 1.3rem;
+                    }
+                }
+            }
+        }
+    }
+}

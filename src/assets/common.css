@@ -1,5 +1,5 @@
 html, body, div, p, span, a, nav, main, section, aside, header, footer, article,
-h1, h2, h3, h4, h5, h6, ul, ol, li, textarea, button, input, select, img,
+h1, h2, h3, h4, h5, h6, ul, ol, li, textarea, button, input, textarea, select, img,
 label, form, code, table, thead, tbody, tr, th, td, sub, sup {
     padding: 0;
     margin: 0;
@@ -26,7 +26,7 @@ hr {
 ul, ol {
     list-style-type: none;
 }
-input, button {
+input, button, textarea {
     border: none;
     outline: none;
 }

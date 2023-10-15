@@ -1,0 +1,86 @@
+.setting {
+    box-sizing: border-box;
+    padding: 2rem;
+
+    .main {
+        width: 100%;
+        background-color: var(--primary-light);
+        border-radius: 1.2rem;
+        box-sizing: border-box;
+        padding: 2rem;
+
+        .header {
+            .nav {
+                span {
+                    color: var(--text-color-gentle);
+                    user-select: none;
+                    cursor: pointer;
+
+                    &:hover {
+                        color: var(--text-color-ink);
+                    }
+                }
+            }
+        }
+
+        .setting_main {
+            .item {
+                box-sizing: border-box;
+                padding: 1.2rem;
+                border: 0.1rem solid var(--gray-5);
+                border-radius: 0.4rem;
+                margin-top: 2rem;
+
+                .subtitle {
+                    font-size: 1.2rem;
+                    color: var(--text-color-gentle);
+                }
+
+                .switch {
+                    position: relative;
+                    width: 5.6rem;
+                    height: 2.4rem;
+                    box-sizing: border-box;
+                    border: var(--gray-5);
+                    background-color: var(--light-3);
+                    border-radius: 1.5rem;
+                    margin-top: 1.5rem;
+                    transition: all .3s;
+                    cursor: pointer;
+
+                    .btn {
+                        position: absolute;
+                        z-index: 1;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        left: 0.2rem;
+                        width: 2.8rem;
+                        height: 2rem;
+                        border-radius: 1rem;
+                        background-color: var(--primary-light);
+                        box-shadow: var(--shadow-3);
+                        transition: all .3s;
+                    }
+
+                    &.active {
+                        transition: all .3s;
+                        background-color: var(--pink);
+
+                        .btn {
+                            left: 2.6rem;
+                            transition: all .3s;
+                        }
+                    }
+                }
+
+                .blacklist {
+                    min-height: 8rem;
+                    box-sizing: border-box;
+                    border: 0.1rem solid var(--gray-5);
+                    border-radius: 0.4rem;
+                    margin-top: 2rem;
+                }
+            }
+        }
+    }
+}

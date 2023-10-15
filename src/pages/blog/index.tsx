@@ -69,7 +69,7 @@ const Blog = () => {
                     </div>
                 </div>
                 <div className={styles.msgs} title='消息'
-                    onClick={() => {navigate(`${import.meta.env.ENV_BASE}blog/msg-center`)}}
+                    onClick={() => {navigate(`/blog/msg-center`)}}
                 >
                     <AliIcon icon='icon-shouye' iconStyle={{width: '100%', height: '100%', color: themeColor}} />
                     <p className={styles.count}>99+</p>

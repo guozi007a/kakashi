@@ -10,7 +10,7 @@ const BlogLeaveList = () => {
         <section className={styles.list}>
             <section className={styles.to_publish}
                 onClick={() => {
-                    navigate(`${import.meta.env.ENV_BASE}blog/leave-publish`)
+                    navigate(`/blog/leave-publish`)
                 }}
             >我要留言</section>
             <ul className={styles.list_ul}>
