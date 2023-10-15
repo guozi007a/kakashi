@@ -8,6 +8,7 @@ import AliIcon from '~/components/aliIcon'
 import { BACK_TOP_POINT } from './config'
 import { QRCodeCanvas } from 'qrcode.react';
 import { useNavigate } from 'react-router-dom'
+import { AppUtils } from '~/utils/common'
 
 const Blog = () => {
     const navigate = useNavigate()
@@ -73,6 +74,9 @@ const Blog = () => {
                 >
                     <AliIcon icon='icon-shouye' iconStyle={{width: '100%', height: '100%', color: themeColor}} />
                     <p className={styles.count}>99+</p>
+                </div>
+                <div className={styles.personal}>
+                    <img src={AppUtils.serverImg('temp-avatar.png')} alt="" />
                 </div>
             </div>
         </header>

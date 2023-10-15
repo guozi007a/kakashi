@@ -18,6 +18,7 @@ const MsgSetting = () => {
             <main className={styles.setting_main}>
                 <div className={styles.item}>
                     <div className={styles.title}>是否屏蔽评论消息提醒</div>
+                    <p className={styles.subtitle}>屏蔽开启后，评论仍然可以被回复，但不会有消息提示</p>
                     <div className={`${styles.switch} ${commentVisible ? styles.active : ''}`}
                         onClick={() => {setCommentVisible(!commentVisible)}}
                     >
@@ -26,6 +27,7 @@ const MsgSetting = () => {
                 </div>
                 <div className={styles.item}>
                     <div className={styles.title}>是否屏蔽私信消息</div>
+                    <p className={styles.subtitle}>屏蔽开启后，其他用户仍将可以给您发送私信，但不会有消息提示</p>
                     <div className={`${styles.switch} ${mailVisible ? styles.active : ''}`}
                         onClick={() => {setMailVisible(!mailVisible)}}
                     >
@@ -34,7 +36,7 @@ const MsgSetting = () => {
                 </div>
                 <div className={styles.item}>
                     <div className={styles.title}>消息黑名单</div>
-                    <p className={styles.subtitle}>黑名单用户将无法向您发送评论和私信消息</p>
+                    <p className={styles.subtitle}>被加入黑名单的用户将无法向您发送评论和私信消息</p>
                     <div className={styles.blacklist}></div>
                 </div>
             </main>
