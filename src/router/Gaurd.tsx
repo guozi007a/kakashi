@@ -12,13 +12,12 @@ const GaurdRouter = ({ Component }: PropType) => {
 
     useEffect(() => { 
         const path = location.pathname
-        
         if (path.endsWith('/blog')) {
-            navigate(path + '/main')
+            navigate('/blog/main')
         }
 
         if (path.endsWith('/blog/msg-center')) {
-            navigate(path + '/comment')
+            navigate('/blog/msg-center/comment')
         }
         
     }, [location.pathname])
