@@ -169,3 +169,12 @@ export const msgCates = [
     { id: 'mail', text: '站内信', icon: 'icon-zhanneixin', },
     { id: 'system', text: '系统消息', icon: 'icon-xitongtongzhi', },
 ]
+
+// 作品
+export const myWorks = [
+    {
+        id: '001',
+        name: '拖动贝塞尔曲线的点位',
+        src: 'https://guozi007a.github.io/custom-bezier/',
+    },
+]

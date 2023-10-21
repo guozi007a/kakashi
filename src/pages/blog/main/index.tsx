@@ -64,7 +64,11 @@ const BlogMain = () => {
                 </section>
             </section>
             <section className={styles.item}>
-                <section className={styles.text}>
+                <section className={styles.text}
+                    onClick={() => {
+                        AppUtils.openPage('blog/works')
+                    }}
+                >
                     <AliIcon icon='icon-_zuopinzhuzuoquan' />
                     <span>我的作品</span>
                 </section>

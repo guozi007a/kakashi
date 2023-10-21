@@ -1,0 +1,54 @@
+.works {
+    box-sizing: border-box;
+    padding: 2rem;
+
+    .works_main {
+        position: relative;
+        width: 100%;
+        background-color: var(--primary-light);
+        box-sizing: border-box;
+        padding: 2rem;
+        border-radius: 1.2rem;
+
+        .works_ul {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+
+            .work {
+                position: relative;
+                width: 30rem;
+                border-radius: 1.2rem;
+                box-shadow: var(--shadow-1);
+
+                .work_iframe {
+                    width: 100%;
+                    height: 30rem;
+
+                    iframe {
+                        width: 30rem;
+                        height: 30rem;
+                        border: none;
+                    }
+                }
+
+                .work_name {
+                    text-align: center;
+                    margin: 0.8rem auto;
+                }
+
+                .mask {
+                    display: block;
+                    position: absolute;
+                    z-index: 1;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
