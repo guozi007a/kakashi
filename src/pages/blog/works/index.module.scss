@@ -12,41 +12,66 @@
 
         .works_ul {
             width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
 
             .work {
-                position: relative;
-                width: 30rem;
-                border-radius: 1.2rem;
+                width: 100%;
+                box-sizing: border-box;
+                padding: 2rem;
+                border-radius: 2rem;
                 box-shadow: var(--shadow-1);
+                margin-top: 4rem;
+                display: flex;
+                align-items: center;
 
-                .work_iframe {
-                    width: 100%;
-                    height: 30rem;
+                &:nth-child(1) {
+                    margin-top: 0;
+                }
 
-                    iframe {
-                        width: 30rem;
-                        height: 30rem;
-                        border: none;
+                .work_logo {
+                    width: 6.6rem;
+                    height: 6.6rem;
+                    border-radius: 1.2rem;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
                     }
                 }
 
-                .work_name {
-                    text-align: center;
-                    margin: 0.8rem auto;
-                }
+                .work_content {
+                    margin-left: 4rem;
 
-                .mask {
-                    display: block;
-                    position: absolute;
-                    z-index: 1;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    cursor: pointer;
+                    .work_title {
+                        display: flex;
+                        align-items: center;
+                        gap: 1.2rem;
+                        font-size: 2rem;
+                        font-weight: 500;
+
+                        .to_work {
+                            display: block;
+                            width: 2.4rem;
+                            height: 2.4rem;
+
+                            img {
+                                width: 100%;
+                            }
+                        }
+                    }
+
+                    .desc {
+                        margin: 2rem 0;
+                    }
+
+                    .to_page {
+                        box-sizing: border-box;
+                        padding: 0.8rem 1.6rem 0.6rem 1.6rem;
+                        user-select: none;
+                        box-shadow: inset 0 0 12px 2px var(--red-3);
+                        border-radius: 1.2rem;
+                        color: var(--red-3);
+                    }
                 }
             }
         }

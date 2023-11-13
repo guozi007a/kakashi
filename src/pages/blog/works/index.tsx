@@ -9,11 +9,19 @@ const Works = () => {
                 {
                     myWorks.map((v) => {
                         return <li key={v.id} className={styles.work}>
-                            <div className={styles.work_iframe}>
-                                <iframe src={v.src} scrolling='no' id={v.id}></iframe>
+                            <div className={styles.work_logo}>
+                                <img src={v.logo} alt="" />
                             </div>
-                            <p className={styles.work_name}>{v.name}</p>
-                            <a href={v.src} target='_blank' className={styles.mask}></a>
+                            <div className={styles.work_content}>
+                                <p className={styles.work_title}>
+                                    <span>{v.title}</span>
+                                    <a href={v.url} target='_blank' title='项目地址' className={styles.to_work}>
+                                        <img src={import.meta.env.ENV_IMAGE_PATH + 'github-mini-logo.png'} alt="" />
+                                    </a>
+                                </p>
+                                <p className={styles.desc}>{v.describe}</p>
+                                <a href={v.href} className={styles.to_page} target='_blank'>进入页面</a>
+                            </div>
                         </li>
                     })
                 }
